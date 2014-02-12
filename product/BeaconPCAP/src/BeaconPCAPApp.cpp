@@ -27,15 +27,12 @@ public:
 	void update();
 	void draw();
 	void shutdown();
-
 	void togglePacketCapture();
 	
 	Capture					mCapture;
-
 	gl::Texture				mTexture;
 	gl::GlslProg			mShader;
 	gl::Fbo					mFbo;
-
 	Beacon					mBeacon;
 	
 	std::map<std::string, int> mPingBatch;
@@ -66,8 +63,8 @@ void BeaconPCAPApp::setup()
 		console() << "Error with capture device." << std::endl;
 		exit(1);
 	}
-
-
+	
+	
 	try {
 		mShader = gl::GlslProg( loadResource( RES_SHADER_PASSTHRU ), loadResource( RES_SHADER_FRAGMENT ) );
 	} catch ( gl::GlslProgCompileExc &exc ) {
@@ -77,7 +74,6 @@ void BeaconPCAPApp::setup()
 		console() << "Cannot load shader: " << exc.what() << std::endl;
 		exit(1);
 	}
-
 	
 	mFbo = gl::Fbo( kWindowWidth, kWindowHeight );
 	try {
@@ -85,12 +81,9 @@ void BeaconPCAPApp::setup()
 	}catch ( Exception &exc ){
 		console() << "Cannot load texture: " << exc.what() << std::endl;
 	}
-	
 }
 
-void BeaconPCAPApp::mouseDown( MouseEvent event )
-{
-}
+void BeaconPCAPApp::mouseDown( MouseEvent event ){}
 
 void BeaconPCAPApp::keyDown( KeyEvent event )
 {
@@ -108,11 +101,10 @@ void BeaconPCAPApp::resize()
 	mFbo = gl::Fbo( getWindowWidth(), getWindowHeight() );
 }
 
-
 void BeaconPCAPApp::update()
 {
 	if( mCapture && mCapture.checkNewFrame() ) mTexture = gl::Texture( mCapture.getSurface() );
-
+	
 	// If more than the max MACs, clear and start over
 	if((float)mPingBatch.begin()->second > kMaxPings) {
 		mPingBatch = mBeacon.getAndClearPings();
@@ -145,7 +137,6 @@ void BeaconPCAPApp::draw()
 	gl::Texture fboTexture = mFbo.getTexture();
 	fboTexture.setFlipped();
 	gl::draw( fboTexture );
-	
 }
 
 

@@ -1,5 +1,5 @@
 dependencies: \
-  /Users/tobyjoe/Projects/controlgroup/BeaconPCAP/BeaconPCAP/src/BeaconPCAPApp.cpp \
+  /Users/tobyjoe/Projects/controlgroup/sxsw-2014-cinder/product/BeaconPCAP/src/BeaconPCAPApp.cpp \
   /Users/tobyjoe/SDKs/cinder_0.8.5_mac/include/cinder/app/AppBasic.h \
   /Users/tobyjoe/SDKs/cinder_0.8.5_mac/include/cinder/Cinder.h \
   /Users/tobyjoe/SDKs/cinder_0.8.5_mac/boost/boost/version.hpp \
@@ -796,7 +796,7 @@ dependencies: \
   /Users/tobyjoe/SDKs/cinder_0.8.5_mac/include/cinder/gl/Fbo.h \
   /Users/tobyjoe/SDKs/cinder_0.8.5_mac/include/cinder/Capture.h \
   /Users/tobyjoe/SDKs/cinder_0.8.5_mac/include/cinder/params/Params.h \
-  /Users/tobyjoe/Projects/controlgroup/BeaconPCAP/BeaconPCAP/include/Resources.h \
+  /Users/tobyjoe/Projects/controlgroup/sxsw-2014-cinder/product/BeaconPCAP/include/Resources.h \
   /Users/tobyjoe/SDKs/cinder_0.8.5_mac/include/cinder/CinderResources.h \
-  /Users/tobyjoe/Projects/controlgroup/BeaconPCAP/BeaconPCAP/include/Constants.h \
-  /Users/tobyjoe/Projects/controlgroup/BeaconPCAP/BeaconPCAP/include/Beacon.h
+  /Users/tobyjoe/Projects/controlgroup/sxsw-2014-cinder/product/BeaconPCAP/include/Constants.h \
+  /Users/tobyjoe/Projects/controlgroup/sxsw-2014-cinder/product/BeaconPCAP/include/Beacon.h

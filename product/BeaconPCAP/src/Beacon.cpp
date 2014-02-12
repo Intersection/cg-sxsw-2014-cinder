@@ -11,10 +11,10 @@
 #include "Constants.h"
 #include "Beacon.h"
 
-
 using namespace ci;
 using namespace ci::app;
 using namespace std;
+
 Beacon::Beacon()
 {
     mPacketCaptureRunning = false;
@@ -38,17 +38,16 @@ void Beacon::startPacketCapture()
 	if(mPacketCaptureRunning) return;
 	try {
 		mPacketCaptureShouldStop = false;
-		char errbuf[PCAP_ERRBUF_SIZE];
+		char errorBuffer[PCAP_ERRBUF_SIZE];
         
-		mPCapDescriptor = pcap_open_live("en0", BUFSIZ, 1, 10, errbuf);
+		mPCapDescriptor = pcap_open_live("en0", BUFSIZ, 1, 10, errorBuffer);
 		
 		if(mPCapDescriptor == NULL)
 		{
-			printf("Error with pcap_open_live(): %s\n", errbuf);
+			console() << "Error with pcap_open_live()\n" << std::endl;
 			return;
 		}
 		
-        
 		mPacketCaptureThread = thread( bind( &Beacon::doPacketCaptureFn, this ) );
 		mPacketCaptureRunning = true;
 	}catch(...){
@@ -71,14 +70,13 @@ void Beacon::doPacketCaptureFn()
 	ci::ThreadSetup threadSetup; // instantiate this if you're talking to Cinder from a secondary thread
     
 	const u_char *packet;
-	struct pcap_pkthdr hdr;			/* pcap.h */
-	struct ether_header *eptr;	/* net/ethernet.h */
-	
+	struct ether_header *etherHeader;
 	int i;
-	u_char *ptr; /* printing out hardware header info */
+	struct pcap_pkthdr packetHeader;
+	u_char *sourceAddressPtr;
 	
-	while(!mPacketCaptureShouldStop) {
-		packet = pcap_next(mPCapDescriptor, &hdr);
+	while( !mPacketCaptureShouldStop ) {
+		packet = pcap_next(mPCapDescriptor, &packetHeader);
 		
 		if(packet == NULL)
 		{
@@ -87,27 +85,26 @@ void Beacon::doPacketCaptureFn()
 		}
 		
 		// Get header
-		eptr = (struct ether_header *) packet;
+		etherHeader = (struct ether_header *) packet;
 		
 		// Get packet type (IP, ARP, other)
-		if(ntohs (eptr->ether_type) == ETHERTYPE_IP){
-			//printf("Ethernet type hex:%x dec:%d is an IP packet\n", ntohs(eptr->ether_type), ntohs(eptr->ether_type));
-		}else if(ntohs (eptr->ether_type) == ETHERTYPE_ARP){
-			//printf("Ethernet type hex:%x dec:%d is an ARP packet\n", ntohs(eptr->ether_type), ntohs(eptr->ether_type));
+		if(ntohs (etherHeader->ether_type) == ETHERTYPE_IP){
+			// IP packet - in case you want to filter on these
+		}else if(ntohs (etherHeader->ether_type) == ETHERTYPE_ARP){
+			// ARP packet - in case you want to filter on these
 		}else {
-			//printf("Ethernet type %x not IP", ntohs(eptr->ether_type));
+			// Other packet - in case you want to filter on these
 			continue;
 		}
 		
 		// Get the source address
-		ptr = eptr->ether_shost;
+		sourceAddressPtr = etherHeader->ether_shost;
 		i = ETHER_ADDR_LEN;
 		string addy;
 		do {
 			char tmp[10];
-			snprintf(tmp, sizeof(tmp), "%s%x", (i == ETHER_ADDR_LEN) ? "" : ":", *ptr++);
+			snprintf(tmp, sizeof(tmp), "%s%x", (i == ETHER_ADDR_LEN) ? "" : ":", *sourceAddressPtr++);
 			addy += tmp;
-			
 		} while(--i > 0);
 		
 		mPings[addy]++;
