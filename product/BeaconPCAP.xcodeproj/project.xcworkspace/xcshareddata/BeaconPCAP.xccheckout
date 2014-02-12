@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>746E6559-2CAF-4246-91A8-F47C618AA63B</string>
+	<key>IDESourceControlProjectName</key>
+	<string>BeaconPCAP</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>C229C30C-9AAA-4E59-A16B-B8E716FC27E4</key>
+		<string>ssh://github.com/controlgroup/BeaconPCAP.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>BeaconPCAP.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>C229C30C-9AAA-4E59-A16B-B8E716FC27E4</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/controlgroup/BeaconPCAP.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>C229C30C-9AAA-4E59-A16B-B8E716FC27E4</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>C229C30C-9AAA-4E59-A16B-B8E716FC27E4</string>
+			<key>IDESourceControlWCCName</key>
+			<string>BeaconPCAP</string>
+		</dict>
+	</array>
+</dict>
+</plist>
