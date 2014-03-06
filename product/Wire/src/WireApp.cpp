@@ -72,7 +72,6 @@ void WireApp::draw()
     gl::enableAlphaBlending();
 	
 	mBeacon.draw();
-	glEnd();
 
 }
 

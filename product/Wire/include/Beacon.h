@@ -28,5 +28,7 @@ public:
 
 protected:
 	void doPacketCaptureFn();
+	void rebalancePings();
+
 
 };

@@ -12,15 +12,17 @@
 class Ping {
 public:
     Ping();
+    Ping( ci::Vec2f position );
     ~Ping();
 
     double decay();
     void ping();
 	void update();
 	void draw();
+	void setPosition( ci::Vec2f position );
 
-    float xPos;
-    float yPos;
+	ci::Vec2f position;
+
     int count;
     
     time_t timer;
