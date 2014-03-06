@@ -19,7 +19,6 @@ class WireApp : public AppBasic {
 public:
 	void prepareSettings( Settings *settings );
 	void setup();
-	void mouseDown( MouseEvent event );
 	void keyDown( KeyEvent event );
 	void resize();
 	void update();
@@ -27,10 +26,7 @@ public:
 	void shutdown();
 	void togglePacketCapture();
 	
-	gl::Texture				mTexture;
-	gl::GlslProg			mShader;
 	Beacon					mBeacon;
-
 };
 
 void WireApp::togglePacketCapture()
@@ -49,22 +45,7 @@ void WireApp::shutdown()
 	mBeacon.stopPacketCapture();
 }
 
-void WireApp::setup()
-{
-	
-	try {
-		mShader = gl::GlslProg( loadResource( RES_SHADER_PASSTHRU ), loadResource( RES_SHADER_FRAGMENT ) );
-	} catch ( gl::GlslProgCompileExc &exc ) {
-		console() << "Cannot compile shader: " << exc.what() << std::endl;
-		exit(1);
-	}catch ( Exception &exc ){
-		console() << "Cannot load shader: " << exc.what() << std::endl;
-		exit(1);
-	}
-	
-}
-
-void WireApp::mouseDown( MouseEvent event ){}
+void WireApp::setup(){}
 
 void WireApp::keyDown( KeyEvent event )
 {
@@ -77,30 +58,18 @@ void WireApp::keyDown( KeyEvent event )
 	}
 }
 
-void WireApp::resize()
-{
-
-}
+void WireApp::resize(){}
 
 void WireApp::update()
 {
-	mTexture = gl::Texture( );
-
-	// Look at dots?
-	
 }
 
 void WireApp::draw()
 {
-	// clear out the window with black
 	gl::clear( kClearColor );
 
-//	if( !mTexture ) return;
-
-//	mTexture.enableAndBind();
 	gl::drawSolidRect( getWindowBounds() );
 
-	
 	gl::clear( Color( 0.01f, 0.01f, 0.01f ), true );
     gl::enableAlphaBlending();
 	
@@ -125,16 +94,6 @@ void WireApp::draw()
 		width = padding * points_it->second.count;
 		gl::drawSolidRect( Rectf(x, y, width, height), true);
     }
-
-//	mShader.bind();
-//	mShader.uniform( "tex", 0 );
-//	mShader.uniform( "bright", 0.99f );
-//	mShader.uniform( "ledCount", 400.0f );
-//	mShader.uniform( "aspect", kWindowHeight / kWindowWidth );
-//
-//	mTexture.unbind();
-//	mShader.unbind();
 }
-
 
 CINDER_APP_BASIC( WireApp, RendererGl(4) )
