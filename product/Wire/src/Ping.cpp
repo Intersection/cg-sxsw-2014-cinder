@@ -37,11 +37,11 @@ void Ping::ping()
 	count++;
     time(&updateStamp);
 	// Add a new packet particle
-	ci::Vec3f attractor = ci::Vec3f( kWindowWidth - 20.0f, yPos, 0.0f );
+	ci::Vec2f attractor = ci::Vec2f( kWindowWidth - 20.0f, yPos );
 	mPackets.push_back(Packet(
-							  Vec3f( 0.0f, yPos, 0.0f),
+							  Vec2f( 0.0f, yPos),
 							  mRed, mGreen, mBlue,
-							  ci::Vec3f(0.0125f, 0.0125f, 0.0125f),
+							  ci::Vec2f(0.0125f, 0.0125f),
 							  (float)count,
 							  attractor
 						)

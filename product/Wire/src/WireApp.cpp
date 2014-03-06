@@ -41,7 +41,9 @@ void WireApp::shutdown()
 	mBeacon.stopPacketCapture();
 }
 
-void WireApp::setup(){}
+void WireApp::setup(){
+	gl::enableAlphaBlending();
+}
 
 void WireApp::keyDown( KeyEvent event )
 {
@@ -70,6 +72,8 @@ void WireApp::draw()
     gl::enableAlphaBlending();
 	
 	mBeacon.draw();
+	glEnd();
+
 }
 
 CINDER_APP_BASIC( WireApp, RendererGl(4) )
