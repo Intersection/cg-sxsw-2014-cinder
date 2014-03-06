@@ -117,6 +117,10 @@ void Beacon::update()
 
 void Beacon::draw()
 {
+		gl::color( Color( 1.0f, 0.0f, 1.0f ) );
+		gl::drawSolidCircle( ci::Vec2f(kCenterX, kCenterY), kPacketRadius * 4.0f );
+	
+
 	for(std::map<std::string, Ping>::iterator pings_it = mPings.begin(); pings_it != mPings.end(); pings_it++)
 	{
 		pings_it->second.draw();

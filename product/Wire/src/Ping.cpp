@@ -20,6 +20,14 @@ Ping::Ping()
     
     xPos = dist(gen) * kWindowWidth;
     yPos = dist(gen) * kWindowHeight;
+	
+	float r = kRadius;
+	float ox = kCenterX;
+	float oy = kCenterY;
+	float angle = dist(gen) * 360.0f;
+	xPos = r*cos(angle) + ox;
+	yPos = r*sin(angle) + oy;
+	
 
     mRed = dist(gen);
     mGreen = dist(gen);
@@ -37,11 +45,11 @@ void Ping::ping()
 	count++;
     time(&updateStamp);
 	// Add a new packet particle
-	ci::Vec2f attractor = ci::Vec2f( kWindowWidth - 20.0f, yPos );
+	ci::Vec2f attractor = ci::Vec2f( kCenterX, kCenterY );
 	mPackets.push_back(Packet(
-							  Vec2f( 0.0f, yPos),
+							  Vec2f( xPos, yPos ),
 							  mRed, mGreen, mBlue,
-							  ci::Vec2f(0.0125f, 0.0125f),
+							  ci::Vec2f::zero(),
 							  (float)count,
 							  attractor
 						)
@@ -73,7 +81,7 @@ void Ping::draw()
 	// Draw the origin point
 
 	gl::color( Color( mRed, mGreen, mBlue ) );
-	float x = 20.0f;
+	float x = xPos;
 	float y = yPos;
 	gl::drawSolidCircle( Vec2f(x, y), 10.0f );
 

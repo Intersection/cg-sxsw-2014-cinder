@@ -19,15 +19,14 @@ Packet::Packet( ci::Vec2f p, float r, float g, float b, ci::Vec2f v, float d, ci
 	attractor = a;
 	
 	perlin = Perlin();
-	speed = 5.0f;
-	damp = 0.9f;
+	speed = 2.0f;
+	damp = 0.99f;
 }
 
 void Packet::update()
 {
-	animationCounter += 10.0f; // move ahead in time, which becomes the z-axis of our 3D noise
+	animationCounter += 5.0f;
 
-	// Compute newest position
 	if(abs(attractor.x - position.x) < kPacketRadius){
 		dead = true;
 		return;
@@ -35,11 +34,15 @@ void Packet::update()
 	
 	priorPosition = position;
 	
-	Vec3f deriv = perlin.dfBm( Vec3f( position.x, position.y, animationCounter ) * 0.001f );
+	// Update position toward attractor
+	position += ((attractor - position) * Vec2f(0.025f, 0.125f));
+
+	Vec3f deriv = perlin.dfBm( Vec3f( attractor.x, attractor.y, animationCounter ) * 0.901f );
 	z = deriv.z;
 	Vec2f deriv2( deriv.x, deriv.y );
 	deriv2.normalize();
 	velocity += deriv2 * speed;
+	//position += positionDelta;
 	position += velocity;
 	velocity *= damp;
 }
@@ -51,14 +54,12 @@ void Packet::draw()
 	glBegin( GL_LINES );
 		// color according to velocity
 		gl::color( Color( red, green, blue ) );
-//		glColor3f( 0.5f + velocity.x / ( speed * 2 ), 0.5f + velocity.y / ( speed * 2 ), 0.5f + z * 0.5f );
 		glVertex2f( priorPosition );
 		glVertex2f( position );
+		gl::drawSolidCircle( position, kPacketRadius );
 	glEnd();
-	
-	
-	// draw the particle, including its position. count on a wrapping context.
-//	gl::drawSolidCircle( Vec2f(position.x, position.y), kPacketRadius );
+	gl::drawSolidCircle( position, kPacketRadius );
+
 }
 
 void Packet::setAttractor( ci::Vec2f a )
