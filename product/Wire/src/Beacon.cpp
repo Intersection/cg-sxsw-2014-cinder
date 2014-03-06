@@ -1,14 +1,3 @@
-#include "cinder/app/AppBasic.h"
-#include "cinder/gl/gl.h"
-#include "cinder/gl/GlslProg.h"
-#include "cinder/gl/Texture.h"
-#include "cinder/gl/Fbo.h"
-#include "cinder/ImageIo.h"
-
-#include "cinder/params/Params.h"
-
-#include "Resources.h"
-#include "Constants.h"
 #include "Beacon.h"
 
 using namespace ci;
@@ -19,23 +8,19 @@ Beacon::Beacon()
 {
     mPacketCaptureRunning = false;
 	mPacketCaptureShouldStop = false;
-    console() << "Beacon created." << std::endl;
 }
 
 void Beacon::togglePacketCapture()
 {
 	if(mPacketCaptureRunning){
 		stopPacketCapture();
-		console() << "Stopping packet capture." << std::endl;
 	}else{
 		startPacketCapture();
-		console() << "Starting packet capture." << std::endl;
 	}
 }
 
 void Beacon::startPacketCapture()
 {
-	console() << "Starting packet capture." << std::endl;
 	if(mPacketCaptureRunning) return;
 	try {
 		mPacketCaptureShouldStop = false;
@@ -63,7 +48,6 @@ void Beacon::stopPacketCapture()
 	mPacketCaptureShouldStop = true;
 	mPacketCaptureThread.join();
 	mPacketCaptureRunning = false;
-    console() << "Stopped packet capture." << std::endl;
 }
 
 void Beacon::doPacketCaptureFn()
@@ -110,18 +94,13 @@ void Beacon::doPacketCaptureFn()
 
         if(mPings.count(addy) == 0){
             mPings[addy] = Ping();
-            console() << "ADDY " << addy << std::endl;
         }
 
         mPings[addy].ping();
-        
 	}
 }
 
-Beacon::~Beacon()
-{
-    
-}
+Beacon::~Beacon(){}
 
 std::map<std::string, Ping> Beacon::getPings()
 {
