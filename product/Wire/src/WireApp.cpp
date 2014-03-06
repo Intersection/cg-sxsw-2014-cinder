@@ -60,9 +60,7 @@ void WireApp::keyDown( KeyEvent event )
 
 void WireApp::resize(){}
 
-void WireApp::update()
-{
-}
+void WireApp::update(){}
 
 void WireApp::draw()
 {
