@@ -62,11 +62,6 @@ void WireApp::setup()
 		exit(1);
 	}
 	
-	try {
-		mTexture = gl::Texture( loadImage( loadResource( RES_GRADIENT ) ) );
-	}catch ( Exception &exc ){
-		console() << "Cannot load texture: " << exc.what() << std::endl;
-	}
 }
 
 void WireApp::mouseDown( MouseEvent event ){}
@@ -112,7 +107,6 @@ void WireApp::draw()
 	std::map<std::string, Ping> pings = mBeacon.getPings();
 	
 	float padding = 20.0f;
-	float minWidth = 10.0f;
 	float width = 0.0f;
 	int index = 0;
 	int count = pings.size();
