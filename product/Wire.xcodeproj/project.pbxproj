@@ -11,7 +11,6 @@
 		57FE216118C8BADB00D39E24 /* Beacon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DABB24671639D2B700E345AF /* Beacon.cpp */; };
 		57FE216218C8BADB00D39E24 /* Ping.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57C6A82D18C7E714003877B2 /* Ping.cpp */; };
 		57FE216418C8BC5900D39E24 /* Wire-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 57FE216318C8BC5900D39E24 /* Wire-Info.plist */; };
-		DAABC2D716481F7B00C6631D /* led.fsh in Resources */ = {isa = PBXBuildFile; fileRef = DAABC2D616481F7B00C6631D /* led.fsh */; };
 		DABB24231639800400E345AF /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DABB24221639800400E345AF /* Cocoa.framework */; };
 		DABB24251639800400E345AF /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DABB24241639800400E345AF /* AppKit.framework */; };
 		DABB24271639800400E345AF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DABB24261639800400E345AF /* Foundation.framework */; };
@@ -35,7 +34,6 @@
 		57C6A82C18C7E661003877B2 /* Ping.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Ping.h; path = include/Ping.h; sourceTree = "<group>"; };
 		57C6A82D18C7E714003877B2 /* Ping.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Ping.cpp; path = src/Ping.cpp; sourceTree = "<group>"; };
 		57FE216318C8BC5900D39E24 /* Wire-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Wire-Info.plist"; sourceTree = "<group>"; };
-		DAABC2D616481F7B00C6631D /* led.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = led.fsh; path = resources/shaders/led.fsh; sourceTree = "<group>"; };
 		DABB241E1639800400E345AF /* Wire.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Wire.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DABB24221639800400E345AF /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		DABB24241639800400E345AF /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -182,7 +180,6 @@
 			children = (
 				DABB244D1639800400E345AF /* passthru.vsh */,
 				DABB244F1639800400E345AF /* shader.fsh */,
-				DAABC2D616481F7B00C6631D /* led.fsh */,
 			);
 			name = Shaders;
 			sourceTree = "<group>";
@@ -246,7 +243,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DAABC2D716481F7B00C6631D /* led.fsh in Resources */,
 				DABB24421639800400E345AF /* CGCredits.rtf in Resources */,
 				DABB24441639800400E345AF /* Credits.rtf in Resources */,
 				57FE216418C8BC5900D39E24 /* Wire-Info.plist in Resources */,

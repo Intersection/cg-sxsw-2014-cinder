@@ -1,9 +1,5 @@
 #include "cinder/app/AppBasic.h"
 #include "cinder/gl/gl.h"
-#include "cinder/gl/GlslProg.h"
-#include "cinder/gl/Texture.h"
-#include "cinder/ImageIo.h"
-#include "cinder/Surface.h"
 
 #include "cinder/params/Params.h"
 
@@ -26,7 +22,7 @@ public:
 	void shutdown();
 	void togglePacketCapture();
 	
-	Beacon					mBeacon;
+	Beacon	mBeacon;
 };
 
 void WireApp::togglePacketCapture()
