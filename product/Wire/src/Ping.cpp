@@ -1,30 +1,17 @@
 //
 //  Ping.cpp
-//  BeaconPCAP
+//  Wire
 //
 //  Created by Toby Boudreaux on 3/5/14.
 //  Copyright (c) 2014 Control Group. All rights reserved.
 //
 
-#include "cinder/app/AppBasic.h"
-#include "cinder/gl/gl.h"
-#include "cinder/gl/GlslProg.h"
-#include "cinder/gl/Texture.h"
-#include "cinder/gl/Fbo.h"
-#include "cinder/ImageIo.h"
 #include <cstdlib>
-#include "cinder/params/Params.h"
-
-#include "Resources.h"
-#include "Constants.h"
 #include <ctime>
-#include "Ping.h"
 #include <random>
 #include <algorithm>
-
-using namespace ci;
-using namespace ci::app;
-using namespace std;
+#include "Ping.h"
+#include "Constants.h"
 
 Ping::Ping(){
     
@@ -45,7 +32,6 @@ Ping::Ping(){
     count = 1;
     
     time(&stamp);
-    
 }
 
 Ping::~Ping(){}

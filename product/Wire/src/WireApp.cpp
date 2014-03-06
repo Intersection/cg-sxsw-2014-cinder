@@ -15,7 +15,7 @@ using namespace ci;
 using namespace ci::app;
 using namespace std;
 
-class BeaconPCAPApp : public AppBasic {
+class WireApp : public AppBasic {
 public:
 	void prepareSettings( Settings *settings );
 	void setup();
@@ -33,23 +33,23 @@ public:
 
 };
 
-void BeaconPCAPApp::togglePacketCapture()
+void WireApp::togglePacketCapture()
 {
 	mBeacon.togglePacketCapture();
 }
 
-void BeaconPCAPApp::prepareSettings( Settings *settings )
+void WireApp::prepareSettings( Settings *settings )
 {
 	settings->setFrameRate( kFrameRate );
 	settings->setWindowSize( kWindowWidth, kWindowHeight );
 }
 
-void BeaconPCAPApp::shutdown()
+void WireApp::shutdown()
 {
 	mBeacon.stopPacketCapture();
 }
 
-void BeaconPCAPApp::setup()
+void WireApp::setup()
 {
 	
 	try {
@@ -69,9 +69,9 @@ void BeaconPCAPApp::setup()
 	}
 }
 
-void BeaconPCAPApp::mouseDown( MouseEvent event ){}
+void WireApp::mouseDown( MouseEvent event ){}
 
-void BeaconPCAPApp::keyDown( KeyEvent event )
+void WireApp::keyDown( KeyEvent event )
 {
 	if ( event.getCode() == KeyEvent::KEY_f ){
 		setFullScreen( !isFullScreen() );
@@ -82,12 +82,12 @@ void BeaconPCAPApp::keyDown( KeyEvent event )
 	}
 }
 
-void BeaconPCAPApp::resize()
+void WireApp::resize()
 {
 
 }
 
-void BeaconPCAPApp::update()
+void WireApp::update()
 {
 	mTexture = gl::Texture( );
 
@@ -95,7 +95,7 @@ void BeaconPCAPApp::update()
 	
 }
 
-void BeaconPCAPApp::draw()
+void WireApp::draw()
 {
 	// clear out the window with black
 	gl::clear( kClearColor );
@@ -106,7 +106,7 @@ void BeaconPCAPApp::draw()
 	gl::drawSolidRect( getWindowBounds() );
 
 	
-	gl::clear( Color( 0.66f, 0.66f, 0.66f ), true );
+	gl::clear( Color( 0.01f, 0.01f, 0.01f ), true );
     gl::enableAlphaBlending();
 	
 	std::map<std::string, Ping> pings = mBeacon.getPings();
@@ -143,4 +143,4 @@ void BeaconPCAPApp::draw()
 }
 
 
-CINDER_APP_BASIC( BeaconPCAPApp, RendererGl(4) )
+CINDER_APP_BASIC( WireApp, RendererGl(4) )

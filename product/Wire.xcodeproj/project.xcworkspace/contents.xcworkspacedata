@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:BeaconPCAP.xcodeproj">
+      location = "self:Wire.xcodeproj">
    </FileRef>
 </Workspace>
