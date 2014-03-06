@@ -52,7 +52,7 @@ MACDot::~MACDot(){}
 
 void MACDot::ping()
 {
-    if(count < 100){
+    if(count < 10){
         count++;
     }
     

@@ -111,24 +111,27 @@ void BeaconPCAPApp::draw()
 	
 	std::map<std::string, MACDot> pings = mBeacon.getPings();
 	
+	float padding = 20.0f;
+	float minWidth = 10.0f;
+	float width = 0.0f;
+	int index = 0;
+	int count = pings.size();
+	float height = (kWindowHeight - (padding * 2.0f)) / count;
+	float x, y;
+
 	for(std::map<std::string, MACDot>::iterator points_it = pings.begin(); points_it != pings.end(); points_it++)
     {
-        float x = points_it->second.xPos * kWindowWidth;
-        float y = points_it->second.yPos * kWindowHeight;
+		++index;
+
+        x = padding * 2.0f;
+        y = (padding * 2.0f) + (index * height);
+
 		gl::color( Color( points_it->second.mRed, points_it->second.mGreen, 1.0f ) );
 
-        //Generate a circle at this point's location
-		float size;
-
-        for (int i=points_it->second.count; i>0; i--) {
-			size = (20.0f) + 4.0f + points_it->second.decay() * (i);
-			gl::drawStrokedCircle( Vec2f( x, y ), size + (size/1) );
-		}
-		//gl::drawSolidCircle( Vec2f( x, y ), size );
-		
-        
+		width = padding * points_it->second.count;
+		gl::drawSolidRect( Rectf(x, y, width, height), true);
     }
-	
+
 //	mShader.bind();
 //	mShader.uniform( "tex", 0 );
 //	mShader.uniform( "bright", 0.99f );
