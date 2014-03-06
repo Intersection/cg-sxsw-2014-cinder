@@ -14,6 +14,8 @@ public:
     void togglePacketCapture();
 	void startPacketCapture();
 	void stopPacketCapture();
+	void update();
+	void draw();
 
     std::map<std::string, Ping>     getPings();
 

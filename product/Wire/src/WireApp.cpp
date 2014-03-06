@@ -56,7 +56,9 @@ void WireApp::keyDown( KeyEvent event )
 
 void WireApp::resize(){}
 
-void WireApp::update(){}
+void WireApp::update(){
+	mBeacon.update();
+}
 
 void WireApp::draw()
 {
@@ -67,27 +69,7 @@ void WireApp::draw()
 	gl::clear( Color( 0.01f, 0.01f, 0.01f ), true );
     gl::enableAlphaBlending();
 	
-	std::map<std::string, Ping> pings = mBeacon.getPings();
-	
-	float padding = 20.0f;
-	float width = 0.0f;
-	int index = 0;
-	int count = pings.size();
-	float height = (kWindowHeight - (padding * 2.0f)) / count;
-	float x, y;
-
-	for(std::map<std::string, Ping>::iterator points_it = pings.begin(); points_it != pings.end(); points_it++)
-    {
-		++index;
-
-        x = padding * 2.0f;
-        y = (padding * 2.0f) + (index * height);
-
-		gl::color( Color( points_it->second.mRed, points_it->second.mGreen, 1.0f ) );
-
-		width = padding * points_it->second.count;
-		gl::drawSolidRect( Rectf(x, y, width, height), true);
-    }
+	mBeacon.draw();
 }
 
 CINDER_APP_BASIC( WireApp, RendererGl(4) )

@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Control Group. All rights reserved.
 //
 #include <time.h>       /* time_t, struct tm, difftime, time, mktime */
+#include "Packet.h"
+#include <list>
 
 class Ping {
 public:
@@ -14,6 +16,8 @@ public:
 
     double decay();
     void ping();
+	void update();
+	void draw();
 
     float xPos;
     float yPos;
@@ -29,4 +33,6 @@ public:
     float mGreen;
     float mBlue;
     
+	std::list<Packet> mPackets;
+	
 };
