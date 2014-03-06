@@ -1,5 +1,5 @@
 //
-//  MACDot.cpp
+//  Ping.cpp
 //  BeaconPCAP
 //
 //  Created by Toby Boudreaux on 3/5/14.
@@ -18,7 +18,7 @@
 #include "Resources.h"
 #include "Constants.h"
 #include <ctime>
-#include "MACDot.h"
+#include "Ping.h"
 #include <random>
 #include <algorithm>
 
@@ -26,7 +26,7 @@ using namespace ci;
 using namespace ci::app;
 using namespace std;
 
-MACDot::MACDot(){
+Ping::Ping(){
     
     std::random_device rd;
     std::mt19937_64 gen(rd());
@@ -48,9 +48,9 @@ MACDot::MACDot(){
     
 }
 
-MACDot::~MACDot(){}
+Ping::~Ping(){}
 
-void MACDot::ping()
+void Ping::ping()
 {
     if(count < 10){
         count++;
@@ -59,7 +59,7 @@ void MACDot::ping()
     time(&updateStamp);
 }
 
-double MACDot::decay()
+double Ping::decay()
 {
     time(&timer);  /* get current time; same as: timer = time(NULL)  */
     

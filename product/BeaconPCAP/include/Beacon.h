@@ -20,7 +20,7 @@
 #include <stdlib.h>
 #include <iostream>
 
-#include "MACDot.h"
+#include "Ping.h"
 
 class Beacon {
 public:
@@ -31,13 +31,13 @@ public:
 	void startPacketCapture();
 	void stopPacketCapture();
 
-    std::map<std::string, MACDot>     getPings();
+    std::map<std::string, Ping>     getPings();
 
 	bool                            mPacketCaptureRunning;
 	bool                            mPacketCaptureShouldStop;
 	std::thread                     mPacketCaptureThread;
 
-    std::map<std::string, MACDot>   mPings;
+    std::map<std::string, Ping>   mPings;
 	pcap_t*                         mPCapDescriptor;
 
 protected:

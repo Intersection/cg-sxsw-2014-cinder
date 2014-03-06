@@ -109,7 +109,7 @@ void BeaconPCAPApp::draw()
 	gl::clear( Color( 0.66f, 0.66f, 0.66f ), true );
     gl::enableAlphaBlending();
 	
-	std::map<std::string, MACDot> pings = mBeacon.getPings();
+	std::map<std::string, Ping> pings = mBeacon.getPings();
 	
 	float padding = 20.0f;
 	float minWidth = 10.0f;
@@ -119,7 +119,7 @@ void BeaconPCAPApp::draw()
 	float height = (kWindowHeight - (padding * 2.0f)) / count;
 	float x, y;
 
-	for(std::map<std::string, MACDot>::iterator points_it = pings.begin(); points_it != pings.end(); points_it++)
+	for(std::map<std::string, Ping>::iterator points_it = pings.begin(); points_it != pings.end(); points_it++)
     {
 		++index;
 

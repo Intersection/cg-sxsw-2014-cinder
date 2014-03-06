@@ -109,7 +109,7 @@ void Beacon::doPacketCaptureFn()
 		} while(--i > 0);
 
         if(mPings.count(addy) == 0){
-            mPings[addy] = MACDot();
+            mPings[addy] = Ping();
             console() << "ADDY " << addy << std::endl;
         }
 
@@ -123,7 +123,7 @@ Beacon::~Beacon()
     
 }
 
-std::map<std::string, MACDot> Beacon::getPings()
+std::map<std::string, Ping> Beacon::getPings()
 {
     return mPings;
 }

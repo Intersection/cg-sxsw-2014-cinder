@@ -1,5 +1,5 @@
 //
-//  MACDot.h
+//  Ping.h
 //  BeaconPCAP
 //
 //  Created by Toby Boudreaux on 3/5/14.
@@ -7,10 +7,10 @@
 //
 #include <time.h>       /* time_t, struct tm, difftime, time, mktime */
 
-class MACDot {
+class Ping {
 public:
-    MACDot();
-    ~MACDot();
+    Ping();
+    ~Ping();
 
     double decay();
     void ping();
