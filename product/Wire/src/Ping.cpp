@@ -13,6 +13,10 @@ using namespace ci::app;
 
 Ping::Ping()
 {
+}
+
+Ping::Ping( ci::Vec2f p )
+{
     std::random_device rd;
     std::mt19937_64 gen(rd());
     
@@ -21,15 +25,10 @@ Ping::Ping()
     mRed = dist(gen);
     mGreen = dist(gen);
     mBlue = dist(gen);
-
+	
     count = 1;
     
     time(&stamp);
-}
-
-Ping::Ping( ci::Vec2f p )
-{
-	Ping();
 	position = p;
 }
 
@@ -45,7 +44,7 @@ void Ping::ping()
 	mPackets.push_back(Packet(
 							  position,
 							  mRed, mGreen, mBlue,
-							  ci::Vec2f::zero(),
+							  ci::Vec2f (100.0f, 200.0f ),
 							  (float)count,
 							  attractor
 						)
@@ -70,6 +69,14 @@ void Ping::update()
 			packets_it->update();
 		}
 	}
+	
+	if(abs(targetPosition.x - position.x) < 5.0f){
+		position = targetPosition;
+	}else{
+		position += (targetPosition - position) * 0.125f;
+	}
+	
+	
 }
 
 void Ping::draw()
@@ -88,5 +95,5 @@ void Ping::draw()
 
 void Ping::setPosition( ci::Vec2f p )
 {
-	position = p;
+	targetPosition = p;
 }

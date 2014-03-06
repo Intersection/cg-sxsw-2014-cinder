@@ -22,6 +22,7 @@ public:
 	void setPosition( ci::Vec2f position );
 
 	ci::Vec2f position;
+	ci::Vec2f targetPosition;
 
     int count;
     

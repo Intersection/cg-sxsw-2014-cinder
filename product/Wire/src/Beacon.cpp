@@ -93,7 +93,7 @@ void Beacon::doPacketCaptureFn()
 		} while(--i > 0);
 
         if(mPings.count(addy) == 0){
-			mPings[addy] = Ping( ci::Vec2f::zero() );
+			mPings[addy] = Ping( ci::Vec2f(100.0f, 200.0f) );
 			rebalancePings();
         }
 
@@ -110,10 +110,13 @@ void Beacon::rebalancePings()
 	float angle;
 	float xPos;
 	float yPos;
+	int i = 0;
 
 	for(std::map<std::string, Ping>::iterator pings_it = mPings.begin(); pings_it != mPings.end(); pings_it++)
 	{
-		angle = 360.0f / mPings.size();
+		++i;
+		
+		angle = i * (360.0f / mPings.size());
 		xPos = r*cos(angle) + ox;
 		yPos = r*sin(angle) + oy;
 		pings_it->second.setPosition( ci::Vec2f( xPos, yPos ));

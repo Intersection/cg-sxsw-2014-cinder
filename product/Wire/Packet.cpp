@@ -1,5 +1,7 @@
 #include "Packet.h"
 #include "Constants.h"
+#include <random>
+#include <algorithm>
 
 
 Packet::Packet()
@@ -19,15 +21,20 @@ Packet::Packet( ci::Vec2f p, float r, float g, float b, ci::Vec2f v, float d, ci
 	attractor = a;
 	
 	perlin = Perlin();
-	speed = 2.0f;
-	damp = 0.89f;
+	perlin.setSeed( clock() );
+	speed = 5.0f;
+	damp = 0.9f;
 }
 
 void Packet::update()
 {
-	animationCounter += 5.0f;
+	std::random_device rd;
+    std::mt19937_64 gen(rd());
+    std::uniform_real_distribution<float> dist(-1.0, 1.0);
 
-	if(abs(attractor.x - position.x) < kPacketRadius){
+	animationCounter += 10.0f;
+
+	if(abs((attractor.x) - position.x) < kPacketRadius && abs((attractor.y) - position.y) < kPacketRadius){
 		dead = true;
 		return;
 	}
@@ -37,12 +44,12 @@ void Packet::update()
 	// Update position toward attractor
 	position += ((attractor - position) * Vec2f(0.125f, 0.25f));
 
-	Vec3f deriv = perlin.dfBm( Vec3f( attractor.x, attractor.y, animationCounter ) * 0.901f );
+	Vec3f deriv = perlin.dfBm( Vec3f( position.x, position.y, animationCounter ) * 0.9001f );
 	z = deriv.z;
 	Vec2f deriv2( deriv.x, deriv.y );
 	deriv2.normalize();
 	velocity += deriv2 * speed;
-	//position += positionDelta;
+
 	position += velocity;
 	velocity *= damp;
 }
