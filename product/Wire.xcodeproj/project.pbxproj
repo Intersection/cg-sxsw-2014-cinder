@@ -170,7 +170,6 @@
 			isa = PBXGroup;
 			children = (
 				DABB244C1639800400E345AF /* Shaders */,
-				DABB24511639800400E345AF /* Images */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -182,13 +181,6 @@
 				DABB244F1639800400E345AF /* shader.fsh */,
 			);
 			name = Shaders;
-			sourceTree = "<group>";
-		};
-		DABB24511639800400E345AF /* Images */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
