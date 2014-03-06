@@ -123,26 +123,4 @@ void Beacon::draw()
 	}
 }
 
-/*
- // Update the Pings
- float padding = 20.0f;
- float width = 0.0f;
- int index = 0;
- int count = mPings.size();
- float height = (kWindowHeight - (padding * 2.0f)) / count;
- float x, y;
- 
- for(std::map<std::string, Ping>::iterator points_it = mPings.begin(); points_it != mPings.end(); points_it++)
- {
- ++index;
- 
- x = padding * 2.0f;
- y = (padding * 2.0f) + (index * height);
- 
- gl::color( Color( points_it->second.mRed, points_it->second.mGreen, 1.0f ) );
- 
- width = padding * points_it->second.count;
- gl::drawSolidCircle( Vec2f(x, y), <#float radius#>)
- }
-*/
 

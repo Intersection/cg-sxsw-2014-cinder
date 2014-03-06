@@ -18,8 +18,8 @@ Ping::Ping()
     
     std::uniform_real_distribution<float> dist(0.0, 1.0);
     
-    xPos = dist(gen);
-    yPos = dist(gen);
+    xPos = dist(gen) * kWindowWidth;
+    yPos = dist(gen) * kWindowHeight;
 
     mRed = dist(gen);
     mGreen = dist(gen);
@@ -37,7 +37,15 @@ void Ping::ping()
 	count++;
     time(&updateStamp);
 	// Add a new packet particle
-	mPackets.push_back(Packet());
+	ci::Vec3f attractor = ci::Vec3f( kWindowWidth - 20.0f, yPos, 0.0f );
+	mPackets.push_back(Packet(
+							  Vec3f( 0.0f, yPos, 0.0f),
+							  mRed, mGreen, mBlue,
+							  ci::Vec3f(0.0125f, 0.0125f, 0.0125f),
+							  (float)count,
+							  attractor
+						)
+	);
 }
 
 double Ping::decay()
@@ -52,7 +60,11 @@ void Ping::update()
 {
 	// Run through list of packets & update them
 	for( std::list<Packet>::iterator packets_it = mPackets.begin(); packets_it != mPackets.end(); ++packets_it ){
-		packets_it->update();
+		if(packets_it->isDead()){
+			mPackets.erase(packets_it);
+		}else{
+			packets_it->update();
+		}
 	}
 }
 
@@ -62,11 +74,9 @@ void Ping::draw()
 
 	gl::color( Color( mRed, mGreen, mBlue ) );
 	float x = 20.0f;
-	float y = yPos * kWindowHeight;
+	float y = yPos;
 	gl::drawSolidCircle( Vec2f(x, y), 10.0f );
-	
-	console() << "drawing ping at (" <<x<< ", " << y << ")" << std::endl;
-	
+
 	// Run through list of packets & draw them
 	for( std::list<Packet>::iterator packets_it = mPackets.begin(); packets_it != mPackets.end(); ++packets_it ){
 		packets_it->draw();
