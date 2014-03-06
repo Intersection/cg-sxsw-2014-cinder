@@ -20,7 +20,7 @@ Packet::Packet( ci::Vec2f p, float r, float g, float b, ci::Vec2f v, float d, ci
 	
 	perlin = Perlin();
 	speed = 2.0f;
-	damp = 0.99f;
+	damp = 0.89f;
 }
 
 void Packet::update()
@@ -35,7 +35,7 @@ void Packet::update()
 	priorPosition = position;
 	
 	// Update position toward attractor
-	position += ((attractor - position) * Vec2f(0.025f, 0.125f));
+	position += ((attractor - position) * Vec2f(0.125f, 0.25f));
 
 	Vec3f deriv = perlin.dfBm( Vec3f( attractor.x, attractor.y, animationCounter ) * 0.901f );
 	z = deriv.z;
@@ -52,7 +52,6 @@ void Packet::draw()
 	
 	// draw all the particles as lines from mPosition to mLastPosition
 	glBegin( GL_LINES );
-		// color according to velocity
 		gl::color( Color( red, green, blue ) );
 		glVertex2f( priorPosition );
 		glVertex2f( position );
