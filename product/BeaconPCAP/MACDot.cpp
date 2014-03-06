@@ -20,6 +20,7 @@
 #include <ctime>
 #include "MACDot.h"
 #include <random>
+#include <algorithm>
 
 using namespace ci;
 using namespace ci::app;
@@ -34,14 +35,36 @@ MACDot::MACDot(){
     std::uniform_real_distribution<float> dist(0.0, 1.0);
     
     xPos = dist(gen);
-    yPos = dist(gen);
-    count = 1;
-}
+    //yPos = dist(gen);
+    yPos = 0.5f;
 
-MACDot::MACDot( float x, float y ){
-    xPos = x;
-    yPos = y;
+    mRed = dist(gen);
+    mGreen = dist(gen);
+    mBlue = dist(gen);
+
     count = 1;
+    
+    time(&stamp);
+    
 }
 
 MACDot::~MACDot(){}
+
+void MACDot::ping()
+{
+    if(count < 100){
+        count++;
+    }
+    
+    time(&updateStamp);
+}
+
+double MACDot::decay()
+{
+    time(&timer);  /* get current time; same as: timer = time(NULL)  */
+    
+    seconds = difftime(timer, updateStamp);
+    return std::max(1.0, seconds);
+
+}
+

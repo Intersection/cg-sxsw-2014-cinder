@@ -111,10 +111,9 @@ void Beacon::doPacketCaptureFn()
         if(mPings.count(addy) == 0){
             mPings[addy] = MACDot();
             console() << "ADDY " << addy << std::endl;
-            console() << " - " << mPings[addy].xPos << ", " << mPings[addy].yPos << std::endl;
         }
 
-        mPings[addy].count++;
+        mPings[addy].ping();
         
 	}
 }

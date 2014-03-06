@@ -108,7 +108,6 @@ void BeaconPCAPApp::draw()
 	
 	gl::clear( Color( 0.66f, 0.66f, 0.66f ), true );
     gl::enableAlphaBlending();
-    gl::color( Color( 1.0f, 0.2f, 0.0f ) );
 	
 	std::map<std::string, MACDot> pings = mBeacon.getPings();
 	
@@ -116,17 +115,18 @@ void BeaconPCAPApp::draw()
     {
         float x = points_it->second.xPos * kWindowWidth;
         float y = points_it->second.yPos * kWindowHeight;
+		gl::color( Color( points_it->second.mRed, points_it->second.mGreen, 1.0f ) );
 
         //Generate a circle at this point's location
-		float size = 20.0f + points_it->second.count;
-        gl::drawSolidCircle( Vec2f( x, y ), size );
-        gl::drawStrokedCircle( Vec2f( x, y ), size + (size/4) );
+		float size;
+
+        for (int i=points_it->second.count; i>0; i--) {
+			size = (20.0f) + 4.0f + points_it->second.decay() * (i);
+			gl::drawStrokedCircle( Vec2f( x, y ), size + (size/1) );
+		}
+		//gl::drawSolidCircle( Vec2f( x, y ), size );
 		
-        //Generate a stringstream for each value with which we're concerned
-        std::stringstream xvals; xvals << x;
-        std::stringstream yvals; yvals << y;
-        std::stringstream ids; ids << points_it->first;
-		
+        
     }
 	
 //	mShader.bind();
