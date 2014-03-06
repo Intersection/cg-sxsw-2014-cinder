@@ -19,6 +19,7 @@ Beacon::Beacon()
 {
     mPacketCaptureRunning = false;
 	mPacketCaptureShouldStop = false;
+    console() << "Beacon created." << std::endl;
 }
 
 void Beacon::togglePacketCapture()
@@ -54,7 +55,6 @@ void Beacon::startPacketCapture()
 		console() << "Error opening device." << std::endl;
 		mPacketCaptureRunning = false;
 	}
-	
 }
 
 void Beacon::stopPacketCapture()
@@ -63,6 +63,7 @@ void Beacon::stopPacketCapture()
 	mPacketCaptureShouldStop = true;
 	mPacketCaptureThread.join();
 	mPacketCaptureRunning = false;
+    console() << "Stopped packet capture." << std::endl;
 }
 
 void Beacon::doPacketCaptureFn()
@@ -106,15 +107,16 @@ void Beacon::doPacketCaptureFn()
 			snprintf(tmp, sizeof(tmp), "%s%x", (i == ETHER_ADDR_LEN) ? "" : ":", *sourceAddressPtr++);
 			addy += tmp;
 		} while(--i > 0);
-		
-		mPings[addy]++;
-	}
-	
-}
 
-int Beacon::getPingCountForMAC(std::string mac)
-{
-    return mPings[mac];
+        if(mPings.count(addy) == 0){
+            mPings[addy] = MACDot();
+            console() << "ADDY " << addy << std::endl;
+            console() << " - " << mPings[addy].xPos << ", " << mPings[addy].yPos << std::endl;
+        }
+
+        mPings[addy].count++;
+        
+	}
 }
 
 Beacon::~Beacon()
@@ -122,15 +124,8 @@ Beacon::~Beacon()
     
 }
 
-std::map<std::string, int> Beacon::getPings()
+std::map<std::string, MACDot> Beacon::getPings()
 {
     return mPings;
 }
 
-std::map<std::string, int> Beacon::getAndClearPings()
-{
-    std::map<std::string, int> tmpMap;
-    tmpMap.insert(mPings.begin(), mPings.end());
-    mPings.clear();
-    return tmpMap;
-}

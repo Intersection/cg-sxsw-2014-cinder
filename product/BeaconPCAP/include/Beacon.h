@@ -20,6 +20,8 @@
 #include <stdlib.h>
 #include <iostream>
 
+#include "MACDot.h"
+
 class Beacon {
 public:
     Beacon();
@@ -28,16 +30,15 @@ public:
     void togglePacketCapture();
 	void startPacketCapture();
 	void stopPacketCapture();
-    int getPingCountForMAC(std::string mac);
-    std::map<std::string, int> getPings();
-    std::map<std::string, int> getAndClearPings();
 
-	bool					mPacketCaptureRunning;
-	bool					mPacketCaptureShouldStop;
-	std::thread				mPacketCaptureThread;
+    std::map<std::string, MACDot>     getPings();
 
-    std::map<std::string, int>	mPings;
-	pcap_t*					mPCapDescriptor;
+	bool                            mPacketCaptureRunning;
+	bool                            mPacketCaptureShouldStop;
+	std::thread                     mPacketCaptureThread;
+
+    std::map<std::string, MACDot>   mPings;
+	pcap_t*                         mPCapDescriptor;
 
 protected:
 	void doPacketCaptureFn();

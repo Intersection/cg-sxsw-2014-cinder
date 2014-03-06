@@ -2,9 +2,7 @@
 #include "cinder/gl/gl.h"
 #include "cinder/gl/GlslProg.h"
 #include "cinder/gl/Texture.h"
-#include "cinder/gl/Fbo.h"
 #include "cinder/ImageIo.h"
-#include "cinder/Capture.h"
 #include "cinder/Surface.h"
 
 #include "cinder/params/Params.h"
@@ -29,13 +27,10 @@ public:
 	void shutdown();
 	void togglePacketCapture();
 	
-	Capture					mCapture;
 	gl::Texture				mTexture;
 	gl::GlslProg			mShader;
-	gl::Fbo					mFbo;
 	Beacon					mBeacon;
-	
-	std::map<std::string, int> mPingBatch;
+
 };
 
 void BeaconPCAPApp::togglePacketCapture()
@@ -56,14 +51,6 @@ void BeaconPCAPApp::shutdown()
 
 void BeaconPCAPApp::setup()
 {
-	try {
-		mCapture = Capture( kCaptureWidth, kCaptureHeight );
-		mCapture.start();
-	} catch ( ... ) {
-		console() << "Error with capture device." << std::endl;
-		exit(1);
-	}
-	
 	
 	try {
 		mShader = gl::GlslProg( loadResource( RES_SHADER_PASSTHRU ), loadResource( RES_SHADER_FRAGMENT ) );
@@ -75,7 +62,6 @@ void BeaconPCAPApp::setup()
 		exit(1);
 	}
 	
-	mFbo = gl::Fbo( kWindowWidth, kWindowHeight );
 	try {
 		mTexture = gl::Texture( loadImage( loadResource( RES_GRADIENT ) ) );
 	}catch ( Exception &exc ){
@@ -98,45 +84,59 @@ void BeaconPCAPApp::keyDown( KeyEvent event )
 
 void BeaconPCAPApp::resize()
 {
-	mFbo = gl::Fbo( getWindowWidth(), getWindowHeight() );
+
 }
 
 void BeaconPCAPApp::update()
 {
-	if( mCapture && mCapture.checkNewFrame() ) mTexture = gl::Texture( mCapture.getSurface() );
+	mTexture = gl::Texture( );
+
+	// Look at dots?
 	
-	// If more than the max MACs, clear and start over
-	if((float)mPingBatch.begin()->second > kMaxPings) {
-		mPingBatch = mBeacon.getAndClearPings();
-		console() << "Clearing all pings." << std::endl;
-	} else {
-		mPingBatch = mBeacon.getPings();
-	}
 }
 
 void BeaconPCAPApp::draw()
 {
 	// clear out the window with black
 	gl::clear( kClearColor );
-	if( !mTexture ) return;
-	mFbo.bindFramebuffer();
-	mTexture.enableAndBind();
-	mShader.bind();
-	mShader.uniform( "tex", 0 );
-	mShader.uniform( "bright", 0.99f );
-	mShader.uniform( "ledCount", 400.0f );
-	mShader.uniform( "aspect", kWindowHeight / kWindowWidth );
-	
-	mShader.uniform( "p1", (float)mPingBatch.begin()->second );
-	
+
+//	if( !mTexture ) return;
+
+//	mTexture.enableAndBind();
 	gl::drawSolidRect( getWindowBounds() );
-	mTexture.unbind();
-	mShader.unbind();
-	mFbo.unbindFramebuffer();
+
 	
-	gl::Texture fboTexture = mFbo.getTexture();
-	fboTexture.setFlipped();
-	gl::draw( fboTexture );
+	gl::clear( Color( 0.66f, 0.66f, 0.66f ), true );
+    gl::enableAlphaBlending();
+    gl::color( Color( 1.0f, 0.2f, 0.0f ) );
+	
+	std::map<std::string, MACDot> pings = mBeacon.getPings();
+	
+	for(std::map<std::string, MACDot>::iterator points_it = pings.begin(); points_it != pings.end(); points_it++)
+    {
+        float x = points_it->second.xPos * kWindowWidth;
+        float y = points_it->second.yPos * kWindowHeight;
+
+        //Generate a circle at this point's location
+		float size = 20.0f + points_it->second.count;
+        gl::drawSolidCircle( Vec2f( x, y ), size );
+        gl::drawStrokedCircle( Vec2f( x, y ), size + (size/4) );
+		
+        //Generate a stringstream for each value with which we're concerned
+        std::stringstream xvals; xvals << x;
+        std::stringstream yvals; yvals << y;
+        std::stringstream ids; ids << points_it->first;
+		
+    }
+	
+//	mShader.bind();
+//	mShader.uniform( "tex", 0 );
+//	mShader.uniform( "bright", 0.99f );
+//	mShader.uniform( "ledCount", 400.0f );
+//	mShader.uniform( "aspect", kWindowHeight / kWindowWidth );
+//
+//	mTexture.unbind();
+//	mShader.unbind();
 }
 
 

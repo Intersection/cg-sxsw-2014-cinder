@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		57C6A82E18C7E714003877B2 /* MACDot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57C6A82D18C7E714003877B2 /* MACDot.cpp */; };
 		DAABC2D716481F7B00C6631D /* led.fsh in Resources */ = {isa = PBXBuildFile; fileRef = DAABC2D616481F7B00C6631D /* led.fsh */; };
 		DABB24231639800400E345AF /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DABB24221639800400E345AF /* Cocoa.framework */; };
 		DABB24251639800400E345AF /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DABB24241639800400E345AF /* AppKit.framework */; };
@@ -32,6 +33,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		57C6A82C18C7E661003877B2 /* MACDot.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MACDot.h; sourceTree = "<group>"; };
+		57C6A82D18C7E714003877B2 /* MACDot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MACDot.cpp; sourceTree = "<group>"; };
 		DAABC2D616481F7B00C6631D /* led.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = led.fsh; path = resources/shaders/led.fsh; sourceTree = "<group>"; };
 		DABB241E1639800400E345AF /* BeaconPCAP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BeaconPCAP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DABB24221639800400E345AF /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -151,6 +154,7 @@
 			children = (
 				DABB24461639800400E345AF /* BeaconPCAPApp.cpp */,
 				DABB24671639D2B700E345AF /* Beacon.cpp */,
+				57C6A82D18C7E714003877B2 /* MACDot.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -161,6 +165,7 @@
 				DABB24661639D2AE00E345AF /* Beacon.h */,
 				DABB24491639800400E345AF /* Resources.h */,
 				DABB244A1639800400E345AF /* Constants.h */,
+				57C6A82C18C7E661003877B2 /* MACDot.h */,
 			);
 			name = Headers;
 			sourceTree = "<group>";
@@ -261,6 +266,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57C6A82E18C7E714003877B2 /* MACDot.cpp in Sources */,
 				DABB24471639800400E345AF /* BeaconPCAPApp.cpp in Sources */,
 				DABB24681639D2B700E345AF /* Beacon.cpp in Sources */,
 			);
