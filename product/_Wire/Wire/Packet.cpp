@@ -36,15 +36,16 @@ void Packet::update()
 
 	if(abs((attractor.x) - position.x) < kPacketRadius && abs((attractor.y) - position.y) < kPacketRadius){
 		dead = true;
+		console() << "DEAD" << std::endl;
 		return;
 	}
 	
 	priorPosition = position;
 	
 	// Update position toward attractor
-	position += ((attractor - position) * Vec2f(0.125f, 0.25f));
+	position += ((attractor - position) * Vec2f(0.125f, 0.125f));
 
-	Vec3f deriv = perlin.dfBm( Vec3f( position.x, position.y, animationCounter ) * 0.9001f );
+	Vec3f deriv = perlin.dfBm( Vec3f( position.x, position.y, animationCounter ) * 0.0001f );
 	z = deriv.z;
 	Vec2f deriv2( deriv.x, deriv.y );
 	deriv2.normalize();
@@ -64,7 +65,7 @@ void Packet::draw()
 		glVertex2f( position );
 		gl::drawSolidCircle( position, kPacketRadius );
 	glEnd();
-	gl::drawSolidCircle( position, kPacketRadius );
+	gl::drawSolidCircle( position, kPacketRadius/4.0f );
 
 }
 

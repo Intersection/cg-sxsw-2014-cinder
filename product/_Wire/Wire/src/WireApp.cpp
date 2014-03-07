@@ -43,6 +43,7 @@ void WireApp::shutdown()
 
 void WireApp::setup(){
 	gl::enableAlphaBlending();
+	//setFullScreen(true);
 }
 
 void WireApp::keyDown( KeyEvent event )
@@ -56,7 +57,10 @@ void WireApp::keyDown( KeyEvent event )
 	}
 }
 
-void WireApp::resize(){}
+void WireApp::resize()
+{
+	mBeacon.resize();
+}
 
 void WireApp::update(){
 	mBeacon.update();

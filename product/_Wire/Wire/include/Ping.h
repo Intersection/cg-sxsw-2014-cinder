@@ -20,6 +20,7 @@ public:
 	void update();
 	void draw();
 	void setPosition( ci::Vec2f position );
+	void setAngle( float angle );
 
 	ci::Vec2f position;
 	ci::Vec2f targetPosition;
@@ -35,7 +36,12 @@ public:
     float mRed;
     float mGreen;
     float mBlue;
+	float angle;
+	float targetAngle;
     
 	std::list<Packet> mPackets;
 	
+protected:
+	void updateAngle();
+
 };

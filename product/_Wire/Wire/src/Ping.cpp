@@ -37,14 +37,15 @@ Ping::~Ping(){}
 
 void Ping::ping()
 {
+	angle = 0.0f;
 	count++;
     time(&updateStamp);
 	// Add a new packet particle
-	ci::Vec2f attractor = ci::Vec2f( kCenterX, kCenterY );
+	ci::Vec2f attractor = ci::Vec2f( getWindowWidth() / 2.0f, getWindowHeight() / 2.0f );
 	mPackets.push_back(Packet(
 							  position,
 							  mRed, mGreen, mBlue,
-							  ci::Vec2f (100.0f, 200.0f ),
+							  ci::Vec2f::zero(),
 							  (float)count,
 							  attractor
 						)
@@ -63,6 +64,11 @@ void Ping::update()
 {
 	// Run through list of packets & update them
 	for( std::list<Packet>::iterator packets_it = mPackets.begin(); packets_it != mPackets.end(); ++packets_it ){
+		if( mPackets.size() > 20 ){
+			// pop some off
+			mPackets.pop_back();
+		}
+
 		if(packets_it->isDead()){
 			mPackets.erase(packets_it);
 		}else{
@@ -70,13 +76,12 @@ void Ping::update()
 		}
 	}
 	
-	if(abs(targetPosition.x - position.x) < 5.0f){
-		position = targetPosition;
+	if(abs(targetAngle - angle) < 15.0f){
+		angle = targetAngle;
 	}else{
-		position += (targetPosition - position) * 0.125f;
+		angle += (targetAngle - angle) * 0.000125f;
+		updateAngle();
 	}
-	
-	
 }
 
 void Ping::draw()
@@ -85,12 +90,33 @@ void Ping::draw()
 
 	gl::color( Color( mRed, mGreen, mBlue ) );
 
-	gl::drawSolidCircle( position, 10.0f );
+	gl::drawSolidCircle( position, 10.0f);// - decay() );
 
 	// Run through list of packets & draw them
 	for( std::list<Packet>::iterator packets_it = mPackets.begin(); packets_it != mPackets.end(); ++packets_it ){
 		packets_it->draw();
 	}
+}
+
+void Ping::setAngle( float a )
+{
+	targetAngle = a;
+}
+
+void Ping::updateAngle()
+{
+	angle = targetAngle;
+	
+	float r = kRadius;
+	float ox = getWindowWidth()	/ 2.0f;
+	float oy = getWindowHeight() / 2.0f;
+	
+	float xPos;
+	float yPos;
+	xPos = r*cos(angle) + ox;
+	yPos = r*sin(angle) + oy;
+	position = Vec2f( xPos, yPos );
+	
 }
 
 void Ping::setPosition( ci::Vec2f p )

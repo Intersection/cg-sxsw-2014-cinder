@@ -16,6 +16,7 @@ public:
 	void stopPacketCapture();
 	void update();
 	void draw();
+	void resize();
 
     std::map<std::string, Ping>     getPings();
 
