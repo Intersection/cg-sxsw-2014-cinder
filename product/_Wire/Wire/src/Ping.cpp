@@ -22,9 +22,7 @@ Ping::Ping( ci::Vec2f p )
     
     std::uniform_real_distribution<float> dist(0.0, 1.0);
     
-    mRed = dist(gen);
-    mGreen = dist(gen);
-    mBlue = dist(gen);
+	color = ci::Color( dist(gen), dist(gen), dist(gen) );
 	
     count = 1;
     
@@ -42,9 +40,9 @@ void Ping::ping()
     time(&updateStamp);
 	// Add a new packet particle
 	ci::Vec2f attractor = ci::Vec2f( getWindowWidth() / 2.0f, getWindowHeight() / 2.0f );
-	mPackets.push_back(Packet(
+	packets.push_back(Packet(
 							  position,
-							  mRed, mGreen, mBlue,
+							  color,
 							  ci::Vec2f::zero(),
 							  (float)count,
 							  attractor
@@ -63,14 +61,14 @@ double Ping::decay()
 void Ping::update()
 {
 	// Run through list of packets & update them
-	for( std::list<Packet>::iterator packets_it = mPackets.begin(); packets_it != mPackets.end(); ++packets_it ){
-		if( mPackets.size() > 20 ){
+	for( std::list<Packet>::iterator packets_it = packets.begin(); packets_it != packets.end(); ++packets_it ){
+		if( packets.size() > 20 ){
 			// pop some off
-			mPackets.pop_back();
+			packets.pop_back();
 		}
 
 		if(packets_it->isDead()){
-			mPackets.erase(packets_it);
+			packets.erase(packets_it);
 		}else{
 			packets_it->update();
 		}
@@ -88,12 +86,12 @@ void Ping::draw()
 {
 	// Draw the origin point
 
-	gl::color( Color( mRed, mGreen, mBlue ) );
+	gl::color( color );
 
 	gl::drawSolidCircle( position, 10.0f);// - decay() );
 
 	// Run through list of packets & draw them
-	for( std::list<Packet>::iterator packets_it = mPackets.begin(); packets_it != mPackets.end(); ++packets_it ){
+	for( std::list<Packet>::iterator packets_it = packets.begin(); packets_it != packets.end(); ++packets_it ){
 		packets_it->draw();
 	}
 }

@@ -6,13 +6,13 @@ using namespace std;
 
 Beacon::Beacon()
 {
-    mPacketCaptureRunning = false;
-	mPacketCaptureShouldStop = false;
+    packetCaptureRunning = false;
+	packetCaptureShouldStop = false;
 }
 
 void Beacon::togglePacketCapture()
 {
-	if(mPacketCaptureRunning){
+	if(packetCaptureRunning){
 		stopPacketCapture();
 	}else{
 		startPacketCapture();
@@ -21,33 +21,33 @@ void Beacon::togglePacketCapture()
 
 void Beacon::startPacketCapture()
 {
-	if(mPacketCaptureRunning) return;
+	if(packetCaptureRunning) return;
 	try {
-		mPacketCaptureShouldStop = false;
+		packetCaptureShouldStop = false;
 		char errorBuffer[PCAP_ERRBUF_SIZE];
         
-		mPCapDescriptor = pcap_open_live("en0", BUFSIZ, 1, 10, errorBuffer);
+		pCapDescriptor = pcap_open_live("en0", BUFSIZ, 1, 10, errorBuffer);
 		
-		if(mPCapDescriptor == NULL)
+		if(pCapDescriptor == NULL)
 		{
 			console() << "Error with pcap_open_live()\n" << std::endl;
 			return;
 		}
 		
-		mPacketCaptureThread = thread( bind( &Beacon::doPacketCaptureFn, this ) );
-		mPacketCaptureRunning = true;
+		packetCaptureThread = thread( bind( &Beacon::doPacketCaptureFn, this ) );
+		packetCaptureRunning = true;
 	}catch(...){
 		console() << "Error opening device." << std::endl;
-		mPacketCaptureRunning = false;
+		packetCaptureRunning = false;
 	}
 }
 
 void Beacon::stopPacketCapture()
 {
-	if(!mPacketCaptureRunning) return;
-	mPacketCaptureShouldStop = true;
-	mPacketCaptureThread.join();
-	mPacketCaptureRunning = false;
+	if(!packetCaptureRunning) return;
+	packetCaptureShouldStop = true;
+	packetCaptureThread.join();
+	packetCaptureRunning = false;
 }
 
 void Beacon::doPacketCaptureFn()
@@ -60,8 +60,8 @@ void Beacon::doPacketCaptureFn()
 	struct pcap_pkthdr packetHeader;
 	u_char *sourceAddressPtr;
 	
-	while( !mPacketCaptureShouldStop ) {
-		packet = pcap_next(mPCapDescriptor, &packetHeader);
+	while( !packetCaptureShouldStop ) {
+		packet = pcap_next(pCapDescriptor, &packetHeader);
 		
 		if(packet == NULL)
 		{
@@ -92,12 +92,12 @@ void Beacon::doPacketCaptureFn()
 			addy += tmp;
 		} while(--i > 0);
 
-        if(mPings.count(addy) == 0){
-			mPings[addy] = Ping( ci::Vec2f::zero() );
+        if(pings.count(addy) == 0){
+			pings[addy] = Ping( ci::Vec2f::zero() );
 			rebalancePings();
         }
 
-        mPings[addy].ping();
+        pings[addy].ping();
 	}
 }
 
@@ -106,11 +106,11 @@ void Beacon::rebalancePings()
 	float angle;
 	int i = 0;
 	
-	for(std::map<std::string, Ping>::iterator pings_it = mPings.begin(); pings_it != mPings.end(); pings_it++)
+	for(std::map<std::string, Ping>::iterator pings_it = pings.begin(); pings_it != pings.end(); pings_it++)
 	{
 		++i;
 		
-		angle = i * (360.0f / mPings.size());
+		angle = i * (360.0f / pings.size());
 		pings_it->second.setAngle( angle );
 	}
 }
@@ -119,12 +119,12 @@ Beacon::~Beacon(){}
 
 std::map<std::string, Ping> Beacon::getPings()
 {
-    return mPings;
+    return pings;
 }
 
 void Beacon::update()
 {
-	for(std::map<std::string, Ping>::iterator pings_it = mPings.begin(); pings_it != mPings.end(); pings_it++)
+	for(std::map<std::string, Ping>::iterator pings_it = pings.begin(); pings_it != pings.end(); pings_it++)
 	{
 		pings_it->second.update();
 	}
@@ -135,7 +135,7 @@ void Beacon::draw()
 //	gl::color( Color( 1.0f, 0.0f, 1.0f ) );
 //	gl::drawSolidCircle( ci::Vec2f(getWindowWidth()/2.0f, getWindowHeight()/2.0f), kPacketRadius * 4.0f );
 
-	for(std::map<std::string, Ping>::iterator pings_it = mPings.begin(); pings_it != mPings.end(); pings_it++)
+	for(std::map<std::string, Ping>::iterator pings_it = pings.begin(); pings_it != pings.end(); pings_it++)
 	{
 		pings_it->second.draw();
 	}
@@ -143,9 +143,6 @@ void Beacon::draw()
 
 void Beacon::resize()
 {
-	mPings.clear();
+	pings.clear();
 	rebalancePings();
 }
-
-
-

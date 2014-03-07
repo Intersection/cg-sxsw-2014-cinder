@@ -20,12 +20,12 @@ public:
 
     std::map<std::string, Ping>     getPings();
 
-	bool                            mPacketCaptureRunning;
-	bool                            mPacketCaptureShouldStop;
-	std::thread                     mPacketCaptureThread;
+	bool                            packetCaptureRunning;
+	bool                            packetCaptureShouldStop;
+	std::thread                     packetCaptureThread;
 
-    std::map<std::string, Ping>     mPings;
-	pcap_t*                         mPCapDescriptor;
+    std::map<std::string, Ping>     pings;
+	pcap_t*                         pCapDescriptor;
 
 protected:
 	void doPacketCaptureFn();

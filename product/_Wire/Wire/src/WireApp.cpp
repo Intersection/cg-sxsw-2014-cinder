@@ -22,12 +22,12 @@ public:
 	void shutdown();
 	void togglePacketCapture();
 	
-	Beacon	mBeacon;
+	Beacon	beacon;
 };
 
 void WireApp::togglePacketCapture()
 {
-	mBeacon.togglePacketCapture();
+	beacon.togglePacketCapture();
 }
 
 void WireApp::prepareSettings( Settings *settings )
@@ -38,12 +38,11 @@ void WireApp::prepareSettings( Settings *settings )
 
 void WireApp::shutdown()
 {
-	mBeacon.stopPacketCapture();
+	beacon.stopPacketCapture();
 }
 
 void WireApp::setup(){
 	gl::enableAlphaBlending();
-	//setFullScreen(true);
 }
 
 void WireApp::keyDown( KeyEvent event )
@@ -59,11 +58,11 @@ void WireApp::keyDown( KeyEvent event )
 
 void WireApp::resize()
 {
-	mBeacon.resize();
+	beacon.resize();
 }
 
 void WireApp::update(){
-	mBeacon.update();
+	beacon.update();
 }
 
 void WireApp::draw()
@@ -75,8 +74,7 @@ void WireApp::draw()
 	gl::clear( Color( 0.01f, 0.01f, 0.01f ), true );
     gl::enableAlphaBlending();
 	
-	mBeacon.draw();
-
+	beacon.draw();
 }
 
 CINDER_APP_BASIC( WireApp, RendererGl(4) )

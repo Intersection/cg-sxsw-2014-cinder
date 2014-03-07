@@ -9,13 +9,12 @@ Packet::Packet()
 	// Initialize
 }
 
-Packet::Packet( ci::Vec2f p, float r, float g, float b, ci::Vec2f v, float d, ci::Vec2f a )
+Packet::Packet( ci::Vec2f p, ci::Color c, ci::Vec2f v, float d, ci::Vec2f a )
 {
 	position = p;
 	priorPosition = p;
-	red = r;
-	green = g;
-	blue = b;
+	color = c;
+
 	velocity = v;
 	decay = d;
 	attractor = a;
@@ -60,7 +59,7 @@ void Packet::draw()
 	
 	// draw all the particles as lines from mPosition to mLastPosition
 	glBegin( GL_LINES );
-		gl::color( Color( red, green, blue ) );
+		gl::color( color );
 		glVertex2f( priorPosition );
 		glVertex2f( position );
 		gl::drawSolidCircle( position, kPacketRadius );
@@ -74,11 +73,9 @@ void Packet::setAttractor( ci::Vec2f a )
 	attractor = a;
 }
 
-void Packet::setColors( float r, float g, float b )
+void Packet::setColor( ci::Color c )
 {
-	red = r;
-	green = g;
-	blue = b;
+	color = c;
 }
 
 void Packet::setVelocity( ci::Vec2f v )

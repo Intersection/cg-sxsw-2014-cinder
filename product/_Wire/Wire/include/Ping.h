@@ -33,13 +33,12 @@ public:
 
     double seconds;
     
-    float mRed;
-    float mGreen;
-    float mBlue;
+	ci::Color color;
+
 	float angle;
 	float targetAngle;
     
-	std::list<Packet> mPackets;
+	std::list<Packet> packets;
 	
 protected:
 	void updateAngle();
