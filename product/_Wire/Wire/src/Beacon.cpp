@@ -4,6 +4,8 @@ using namespace ci;
 using namespace ci::app;
 using namespace std;
 
+Beacon::~Beacon(){}
+
 Beacon::Beacon()
 {
     packetCaptureRunning = false;
@@ -30,6 +32,7 @@ void Beacon::startPacketCapture()
 		
 		if(pCapDescriptor == NULL)
 		{
+			// TODO: Throw real exception here.
 			console() << "Error with pcap_open_live()\n" << std::endl;
 			return;
 		}
@@ -37,6 +40,7 @@ void Beacon::startPacketCapture()
 		packetCaptureThread = thread( bind( &Beacon::doPacketCaptureFn, this ) );
 		packetCaptureRunning = true;
 	}catch(...){
+		// TODO: Throw real exception here.
 		console() << "Error opening device." << std::endl;
 		packetCaptureRunning = false;
 	}
@@ -52,7 +56,7 @@ void Beacon::stopPacketCapture()
 
 void Beacon::doPacketCaptureFn()
 {
-	ci::ThreadSetup threadSetup; // instantiate this if you're talking to Cinder from a secondary thread
+	ci::ThreadSetup threadSetup;
     
 	const u_char *packet;
 	struct ether_header *etherHeader;
@@ -101,22 +105,6 @@ void Beacon::doPacketCaptureFn()
 	}
 }
 
-void Beacon::rebalancePings()
-{
-	float angle;
-	int i = 0;
-	
-	for(std::map<std::string, Ping>::iterator pings_it = pings.begin(); pings_it != pings.end(); pings_it++)
-	{
-		++i;
-		
-		angle = i * (360.0f / pings.size());
-		pings_it->second.setAngle( angle );
-	}
-}
-
-Beacon::~Beacon(){}
-
 std::map<std::string, Ping> Beacon::getPings()
 {
     return pings;
@@ -130,6 +118,8 @@ void Beacon::update()
 	}
 }
 
+#pragma mark - VISUAL STUFF - MOVE TO UI CLASS
+
 void Beacon::draw()
 {
 //	gl::color( Color( 1.0f, 0.0f, 1.0f ) );
@@ -138,6 +128,19 @@ void Beacon::draw()
 	for(std::map<std::string, Ping>::iterator pings_it = pings.begin(); pings_it != pings.end(); pings_it++)
 	{
 		pings_it->second.draw();
+	}
+}
+
+void Beacon::rebalancePings()
+{
+	float angle;
+	int i = 0;
+
+	for(std::map<std::string, Ping>::iterator pings_it = pings.begin(); pings_it != pings.end(); pings_it++)
+	{
+		++i;
+		angle = i * (360.0f / pings.size());
+		pings_it->second.setAngle( angle );
 	}
 }
 

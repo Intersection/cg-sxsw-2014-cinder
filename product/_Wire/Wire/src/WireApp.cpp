@@ -21,7 +21,7 @@ public:
 	void draw();
 	void shutdown();
 	void togglePacketCapture();
-	
+
 	Beacon	beacon;
 };
 
