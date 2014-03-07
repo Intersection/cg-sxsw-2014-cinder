@@ -25,7 +25,7 @@ Ping::Ping( ci::Vec2f p )
 	color = ci::Color( dist(gen), dist(gen), dist(gen) );
 	
     count = 1;
-    
+
     time(&stamp);
 	position = p;
 }
@@ -40,38 +40,32 @@ void Ping::ping()
     time(&updateStamp);
 	// Add a new packet particle
 	ci::Vec2f attractor = ci::Vec2f( getWindowWidth() / 2.0f, getWindowHeight() / 2.0f );
-	packets.push_back(Packet(
-							  position,
+
+	if( packets.size() > 20 ){
+		//packets.pop_back(); // Kill the oldest.
+	}
+
+
+	packets.push_back(Packet( position,
 							  color,
-							  ci::Vec2f::zero(),
-							  (float)count,
 							  attractor
 						)
 	);
 }
 
-double Ping::decay()
-{
-    time(&timer);
-    
-    seconds = difftime(timer, updateStamp);
-    return std::max(1.0, seconds);
-}
-
 void Ping::update()
 {
+	for( std::list<Packet>::iterator packets_it = packets.begin(); packets_it != packets.end(); ++packets_it ){
+		if(packets_it->isDead()){
+			//packets.erase(packets_it);
+			// Re-use this one.
+		}
+	}
+
+	
 	// Run through list of packets & update them
 	for( std::list<Packet>::iterator packets_it = packets.begin(); packets_it != packets.end(); ++packets_it ){
-		if( packets.size() > 20 ){
-			// pop some off
-			packets.pop_back();
-		}
-
-		if(packets_it->isDead()){
-			packets.erase(packets_it);
-		}else{
-			packets_it->update();
-		}
+		packets_it->update();
 	}
 	
 	if(abs(targetAngle - angle) < 15.0f){

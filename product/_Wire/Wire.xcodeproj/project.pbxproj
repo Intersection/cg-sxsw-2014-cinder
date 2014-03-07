@@ -10,7 +10,6 @@
 		57FE216018C8BADB00D39E24 /* WireApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DABB24461639800400E345AF /* WireApp.cpp */; };
 		57FE216118C8BADB00D39E24 /* Beacon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DABB24671639D2B700E345AF /* Beacon.cpp */; };
 		57FE216218C8BADB00D39E24 /* Ping.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57C6A82D18C7E714003877B2 /* Ping.cpp */; };
-		57FE216418C8BC5900D39E24 /* Wire-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 57FE216318C8BC5900D39E24 /* Wire-Info.plist */; };
 		57FE216718C8C33200D39E24 /* Packet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57FE216618C8C33200D39E24 /* Packet.cpp */; };
 		DABB24231639800400E345AF /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DABB24221639800400E345AF /* Cocoa.framework */; };
 		DABB24251639800400E345AF /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DABB24241639800400E345AF /* AppKit.framework */; };
@@ -215,7 +214,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = CG;
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Control Group";
 			};
 			buildConfigurationList = DABB24181639800400E345AF /* Build configuration list for PBXProject "Wire" */;
@@ -242,7 +241,6 @@
 			files = (
 				DABB24421639800400E345AF /* CGCredits.rtf in Resources */,
 				DABB24441639800400E345AF /* Credits.rtf in Resources */,
-				57FE216418C8BC5900D39E24 /* Wire-Info.plist in Resources */,
 				DABB244E1639800400E345AF /* passthru.vsh in Resources */,
 				DABB24501639800400E345AF /* shader.fsh in Resources */,
 			);
@@ -269,7 +267,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = i386;
 				CINDER_PATH = "/Users/$(USER)/SDKs/cinder_0.8.4_mac";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -303,7 +300,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = i386;
 				CINDER_PATH = "/Users/$(USER)/SDKs/cinder_0.8.4_mac";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -330,6 +326,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CINDER_PATH = "/Users/$(USER)/SDKs/cinder_0.8.5_mac";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Wire/Wire-Prefix.pch";
 				GCC_VERSION = "";
@@ -343,6 +340,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CINDER_PATH = "/Users/$(USER)/SDKs/cinder_0.8.5_mac";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Wire/Wire-Prefix.pch";
 				GCC_VERSION = "";

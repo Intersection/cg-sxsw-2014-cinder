@@ -77,4 +77,4 @@ void WireApp::draw()
 	beacon.draw();
 }
 
-CINDER_APP_BASIC( WireApp, RendererGl(4) )
+CINDER_APP_BASIC( WireApp, RendererGl(0) )

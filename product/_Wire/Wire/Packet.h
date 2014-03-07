@@ -13,14 +13,15 @@ using namespace ci::app;
 class Packet {
 public:
 	Packet();
-	Packet( ci::Vec2f position, ci::Color color, ci::Vec2f velocity, float decay, ci::Vec2f attractor );
+	Packet( ci::Vec2f startingLocation, ci::Color color, ci::Vec2f attractor );
 
 	void update();
 	void draw();
 	void setAttractor( ci::Vec2f attractor );
-	void setColor( ci::Color color );
+	void setColor( ci::ColorA color );
 	void setVelocity( ci::Vec2f velocity );
 	bool isDead();
+	double getDecay();
 	
 	ci::Vec2f				position;
 	float					z;
@@ -30,7 +31,7 @@ public:
 	float					decay;
 	float					maxDecay;
 	ci::Vec2f				attractor;
-	ci::Color				color;
+	ci::ColorA				color;
 	bool					dead;
 	
 	Perlin					perlin;
@@ -38,4 +39,9 @@ public:
 	float					speed;
 	float					damp;
 	
+	time_t					timer;
+    time_t					stamp;
+    double					seconds;
+	double					lifespan; // in seconds
+
 };

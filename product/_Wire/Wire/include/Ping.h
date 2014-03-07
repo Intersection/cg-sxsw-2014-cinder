@@ -15,7 +15,6 @@ public:
     Ping( ci::Vec2f position );
     ~Ping();
 
-    double decay();
     void ping();
 	void update();
 	void draw();
@@ -26,20 +25,20 @@ public:
 	ci::Vec2f targetPosition;
 
     int count;
-    
+
     time_t timer;
     time_t stamp;
     time_t updateStamp;
 
     double seconds;
-    
+
 	ci::Color color;
 
 	float angle;
 	float targetAngle;
-    
+
 	std::list<Packet> packets;
-	
+
 protected:
 	void updateAngle();
 
