@@ -104,7 +104,7 @@ void Beacon::doPacketCaptureFn()
 		} while(--i > 0);
 
         if(pings.count(addy) == 0){
-			if(pings.size() >= 35 ) return;
+			//if(pings.size() >= 35 ) return;
 			
 			pings[addy] = Ping( ci::Vec2f(spacing, spacing), index++ );
 			pings[addy].setTextureFont( textureFont );
