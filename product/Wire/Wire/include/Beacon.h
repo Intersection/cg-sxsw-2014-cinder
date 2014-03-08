@@ -3,6 +3,7 @@
 #include "cinder/Thread.h"
 #include "cinder/app/AppBasic.h"
 #include "Constants.h"
+#include "cinder/gl/TextureFont.h"
 
 #include "Ping.h"
 
@@ -17,6 +18,8 @@ public:
 	void update();
 	void draw();
 	void resize();
+	void setTextureFont( gl::TextureFontRef textureFont );
+
 
     std::map<std::string, Ping>     getPings();
 
@@ -27,6 +30,7 @@ public:
     std::map<std::string, Ping>     pings;
 	pcap_t*                         pCapDescriptor;
 	float							spacing;
+	gl::TextureFontRef				textureFont;
 
 
 protected:

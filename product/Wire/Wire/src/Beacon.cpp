@@ -1,9 +1,11 @@
 #include "Beacon.h"
+#include <time.h>
+#include "cinder/gl/Texture.h"
+#include "cinder/gl/TextureFont.h"
 
 using namespace ci;
 using namespace ci::app;
 using namespace std;
-#include <time.h>
 
 Beacon::~Beacon(){}
 
@@ -62,46 +64,7 @@ void Beacon::doPacketCaptureFn()
 
 	ci::ThreadSetup threadSetup;
     
-#ifdef FAKE_IT
-	
-	std::vector<std::string> macs;
-	std::string a;
-	
-	for(int i=0; i<25; i++){
-		a = "one_" + to_string(i);
-		macs.push_back( a );
-	}
-	
-	int idx;
-	string addy;
-	
-	while( !packetCaptureShouldStop ) {
 
-		//if((int)getElapsedSeconds() % 2 != 0) continue;
-		
-		idx = (int)getElapsedSeconds() % (int)macs.size();
-		addy = macs[idx];
-		console() << "addy: " << addy << std::endl;
-
-		if(pings.count(addy) == 0){
-			pings[addy] = Ping( ci::Vec2f::zero() );
-			rebalancePings();
-		}
-		pings[addy].ping();
-		pings[addy].ping();
-		pings[addy].ping();
-		pings[addy].ping();
-		struct timespec tim, tim2;
-		tim.tv_sec = 0;
-		tim.tv_nsec = 500000000L;
-		
-		nanosleep(&tim , &tim2);
-		sleep(1);
-		
-		
-	}
-
-#else
 	const u_char *packet;
 	struct ether_header *etherHeader;
 	int i;
@@ -146,14 +109,15 @@ void Beacon::doPacketCaptureFn()
 		
         if(pings.count(addy) == 0){
 			pings[addy] = Ping( ci::Vec2f(spacing, spacing) );
+			pings[addy].setTextureFont( textureFont );
+			pings[addy].setAddress( addy );
+
 			rebalancePings();
         }
 
         pings[addy].ping();
+
 	}
-#endif
-
-
 }
 
 std::map<std::string, Ping> Beacon::getPings()
@@ -197,4 +161,9 @@ void Beacon::resize()
 {
 	pings.clear();
 	rebalancePings();
+}
+
+void Beacon::setTextureFont( gl::TextureFontRef t )
+{
+	textureFont = t;
 }

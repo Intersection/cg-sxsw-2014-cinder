@@ -59,7 +59,7 @@ void Packet::update()
 	position += ((attractor - position) * Vec2f(0.125f, 0.125f));
 
 	//0.9001f
-	Vec3f deriv = perlin.dfBm( Vec3f( position.x, position.y, animationCounter ) * 0.7001f );
+	Vec3f deriv = perlin.dfBm( Vec3f( position.x, position.y, animationCounter ) * 0.0001f );
 	z = deriv.z;
 	Vec2f deriv2( deriv.x, deriv.y );
 	deriv2.normalize();

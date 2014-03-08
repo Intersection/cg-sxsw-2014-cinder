@@ -8,6 +8,8 @@
 #include <time.h>       /* time_t, struct tm, difftime, time, mktime */
 #include "Packet.h"
 #include <list>
+#include "cinder/gl/Texture.h"
+#include "cinder/gl/TextureFont.h"
 
 class Ping {
 public:
@@ -20,7 +22,9 @@ public:
 	void draw();
 	void setPosition( ci::Vec2f position );
 	void setAngle( float angle );
-
+	void setTextureFont( gl::TextureFontRef textureFont );
+	void setAddress( std::string address );
+	
 	ci::Vec2f position;
 	ci::Vec2f targetPosition;
 
@@ -32,9 +36,13 @@ public:
 
     double seconds;
 
-	ci::ColorA color;
+	std::string address;
 
+	ci::ColorA color;
+	
 	std::list<Packet> packets;
+
+	gl::TextureFontRef	textureFont;
 
 protected:
 	void updateAngle();

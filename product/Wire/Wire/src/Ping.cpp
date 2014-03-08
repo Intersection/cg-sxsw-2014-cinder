@@ -64,7 +64,7 @@ void Ping::update()
 			packets.erase(packets_it++);
 		}else{
 			packets_it->update();
-			packets_it->setStartingPosition( position );
+			packets_it->setStartingPosition( position + ci::Vec2f( 160.0f, 10.0f ) );
 			++packets_it;
 		}
 	}
@@ -84,8 +84,20 @@ void Ping::draw()
 	gl::enableAlphaBlending();
 	gl::color( color );
 
-	gl::drawSolidRect( Rectf(position.x, position.y, position.x + 40.0f, position.y + 20.0f) );// - decay() );
+	float ulx, uly, lrx, lry;
 
+	ulx = position.x;
+	uly = position.y;
+	lrx = ulx + 40.0f;
+	lry = uly + 20.0f;
+	
+	Rectf iconRect( ulx, uly, lrx, lry );
+	gl::drawSolidRect( iconRect );
+	Rectf textRect( lrx + 10.0f, uly + 15.0f, lrx + 130.0f, lry  );
+	textureFont->drawStringWrapped( address, textRect );
+
+	
+	
 	// Run through list of packets & draw them
 	for( std::list<Packet>::iterator packets_it = packets.begin(); packets_it != packets.end(); ++packets_it ){
 		packets_it->draw();
@@ -98,3 +110,15 @@ void Ping::setPosition( ci::Vec2f p )
 {
 	targetPosition = p;
 }
+
+void Ping::setTextureFont( gl::TextureFontRef t )
+{
+	textureFont = t;
+}
+
+void Ping::setAddress( std::string a )
+{
+	address = a;
+}
+
+

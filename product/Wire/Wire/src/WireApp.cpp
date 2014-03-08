@@ -21,6 +21,7 @@ public:
 	void draw();
 	void shutdown();
 	void togglePacketCapture();
+	gl::TextureFontRef textureFont;
 
 	Beacon	beacon;
 };
@@ -43,6 +44,9 @@ void WireApp::shutdown()
 
 void WireApp::setup(){
 	gl::enableAlphaBlending();
+	textureFont = gl::TextureFont::create(Font("Helvetica", 14), gl::TextureFont::Format().enableMipmapping());
+
+	beacon.setTextureFont( textureFont );
 }
 
 void WireApp::keyDown( KeyEvent event )
