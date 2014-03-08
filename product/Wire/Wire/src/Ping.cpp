@@ -7,14 +7,11 @@
 #include "Packet.h"
 #include "cinder/gl/gl.h"
 #include "cinder/app/AppBasic.h"
-#include <cmath>        // std::abs
 
 using namespace ci;
 using namespace ci::app;
 
-Ping::Ping()
-{
-}
+Ping::Ping(){}
 
 Ping::Ping( ci::Vec2f p, int i )
 {
@@ -33,7 +30,6 @@ Ping::Ping( ci::Vec2f p, int i )
 	position.y = 20.0f + i * 30.0f;
 }
 
-
 Ping::~Ping(){}
 
 void Ping::ping()
@@ -41,15 +37,10 @@ void Ping::ping()
 	count++;
     time(&updateStamp);
 
-	// Add a new packet particle
-	//ci::Vec2f attractor = ci::Vec2f( getWindowWidth() / 2.0f, getWindowHeight() / 2.0f );
+	// Add a new packet particle and set the attractor to the opposite side
 	ci::Vec2f attractor = ci::Vec2f( getWindowWidth() - 20.0f, position.y );
 
-	packets.push_back(Packet( position,
-							  color,
-							  attractor
-						)
-	);
+	packets.push_back( Packet( position, color, attractor ) );
 }
 
 void Ping::update()
@@ -67,12 +58,6 @@ void Ping::update()
 			++packets_it;
 		}
 	}
-
-//	if(abs(targetPosition.x - position.x) < 2.0f && abs(targetPosition.y - position.y) < 2.0f){
-//		position = targetPosition;
-//	}else{
-//		position += (targetPosition - position) * 0.0125f;
-//	}
 }
 
 void Ping::draw()
@@ -105,7 +90,6 @@ void Ping::draw()
 
 void Ping::setPosition( ci::Vec2f p )
 {
-	targetPosition = p;
 	position = p;
 }
 

@@ -1,18 +1,18 @@
 #include "Packet.h"
 #include "Constants.h"
 
+using namespace ci;
+using namespace ci::app;
+using namespace std;
 
-Packet::Packet()
-{
-	// Initialize
-}
+Packet::Packet(){}
 
 Packet::Packet( ci::Vec2f s, ci::Color c, ci::Vec2f a )
 {
 	color = c;
 	attractor = a;
 	
-	perlin = Perlin();
+	perlin = ci::Perlin();
 	perlin.setSeed( (int32_t)clock() );
 	speed = 5.0f;
 	damp = 0.9f;
@@ -21,7 +21,6 @@ Packet::Packet( ci::Vec2f s, ci::Color c, ci::Vec2f a )
 	position = s;
 	priorPosition = position;
 	velocity = ci::Vec2f::zero();
-	decay = 0.0f;
 	
 	lifespan = 5.0f;
 	dead = false;

@@ -12,30 +12,26 @@ public:
     Beacon();
     ~Beacon();
     
-    void togglePacketCapture();
-	void startPacketCapture();
-	void stopPacketCapture();
-	void update();
-	void draw();
-	void resize();
-	void setTextureFont( gl::TextureFontRef textureFont );
-
-
-    std::map<std::string, Ping>     getPings();
+    void							togglePacketCapture();
+	void							startPacketCapture();
+	void							stopPacketCapture();
+	void							update();
+	void							draw();
+	void							resize();
+	void							setTextureFont( cinder::gl::TextureFontRef textureFont );
+    std::map<std::string, Ping>		getPings();
 
 	bool                            packetCaptureRunning;
 	bool                            packetCaptureShouldStop;
 	std::thread                     packetCaptureThread;
-
     std::map<std::string, Ping>     pings;
 	pcap_t*                         pCapDescriptor;
 	float							spacing;
-	gl::TextureFontRef				textureFont;
+	cinder::gl::TextureFontRef				textureFont;
 
 
 protected:
 	void doPacketCaptureFn();
-	void rebalancePings();
 
 
 };
