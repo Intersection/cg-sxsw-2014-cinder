@@ -34,9 +34,6 @@ public:
 
 	ci::ColorA color;
 
-	float angle;
-	float targetAngle;
-
 	std::list<Packet> packets;
 
 protected:

@@ -19,6 +19,7 @@ Packet::Packet( ci::Vec2f s, ci::Color c, ci::Vec2f a )
 	speed = 5.0f;
 	damp = 0.9f;
 
+	startingPosition = s;
 	position = s;
 	priorPosition = position;
 	velocity = ci::Vec2f::zero();
@@ -58,7 +59,7 @@ void Packet::update()
 	position += ((attractor - position) * Vec2f(0.125f, 0.125f));
 
 	//0.9001f
-	Vec3f deriv = perlin.dfBm( Vec3f( position.x, position.y, animationCounter ) * 0.9001f );
+	Vec3f deriv = perlin.dfBm( Vec3f( position.x, position.y, animationCounter ) * 0.7001f );
 	z = deriv.z;
 	Vec2f deriv2( deriv.x, deriv.y );
 	deriv2.normalize();
@@ -76,6 +77,7 @@ void Packet::draw()
 	// draw all the particles as lines from mPosition to mLastPosition
 	glBegin( GL_LINES );
 		gl::color( color );
+		glVertex2f( startingPosition );
 		glVertex2f( priorPosition );
 		glVertex2f( position );
 
@@ -111,3 +113,9 @@ bool Packet::isDead()
 	//if(dead) console() << "DEAD PACKET" << std::endl;
 	return dead;
 }
+
+void Packet::setStartingPosition( ci::Vec2f p )
+{
+	startingPosition = p;
+}
+

@@ -22,10 +22,13 @@ public:
 	void setVelocity( ci::Vec2f velocity );
 	bool isDead();
 	double getDecay();
+	void setStartingPosition( ci::Vec2f position );
 	
 	ci::Vec2f				position;
-	float					z;
 	ci::Vec2f				priorPosition;
+	ci::Vec2f				startingPosition;
+
+	float					z;
 	ci::Vec2f				velocity;
 	float					radius;
 	float					decay;

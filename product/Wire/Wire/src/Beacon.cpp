@@ -11,6 +11,7 @@ Beacon::Beacon()
 {
     packetCaptureRunning = false;
 	packetCaptureShouldStop = false;
+	spacing = 20.0f;
 }
 
 void Beacon::togglePacketCapture()
@@ -144,7 +145,7 @@ void Beacon::doPacketCaptureFn()
 
 		
         if(pings.count(addy) == 0){
-			pings[addy] = Ping( ci::Vec2f::zero() );
+			pings[addy] = Ping( ci::Vec2f(spacing, spacing) );
 			rebalancePings();
         }
 
@@ -172,9 +173,6 @@ void Beacon::update()
 
 void Beacon::draw()
 {
-//	gl::color( Color( 1.0f, 0.0f, 1.0f ) );
-//	gl::drawSolidCircle( ci::Vec2f(getWindowWidth()/2.0f, getWindowHeight()/2.0f), kPacketRadius * 4.0f );
-
 	for(std::map<std::string, Ping>::iterator pings_it = pings.begin(); pings_it != pings.end(); pings_it++)
 	{
 		pings_it->second.draw();
@@ -183,14 +181,15 @@ void Beacon::draw()
 
 void Beacon::rebalancePings()
 {
-	float angle;
+	ci::Vec2f position;
 	int i = 0;
 
 	for(std::map<std::string, Ping>::iterator pings_it = pings.begin(); pings_it != pings.end(); pings_it++)
 	{
 		++i;
-		angle = i * (360.0f / pings.size());
-		pings_it->second.setAngle( angle );
+		position.x = spacing;
+		position.y = i * ((getWindowHeight() - (4.0f * spacing)) / pings.size());
+		pings_it->second.setPosition( position );
 	}
 }
 

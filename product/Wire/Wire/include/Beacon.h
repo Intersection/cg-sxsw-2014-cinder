@@ -26,6 +26,8 @@ public:
 
     std::map<std::string, Ping>     pings;
 	pcap_t*                         pCapDescriptor;
+	float							spacing;
+
 
 protected:
 	void doPacketCaptureFn();

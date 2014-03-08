@@ -7,6 +7,7 @@
 #include "Packet.h"
 #include "cinder/gl/gl.h"
 #include "cinder/app/AppBasic.h"
+#include <cmath>        // std::abs
 
 using namespace ci;
 using namespace ci::app;
@@ -35,7 +36,6 @@ Ping::~Ping(){}
 
 void Ping::ping()
 {
-	angle = 0.0f;
 	count++;
     time(&updateStamp);
 	// Add a new packet particle
@@ -64,16 +64,18 @@ void Ping::update()
 			packets.erase(packets_it++);
 		}else{
 			packets_it->update();
+			packets_it->setStartingPosition( position );
 			++packets_it;
 		}
 	}
 
-	if(abs(targetAngle - angle) < 15.0f){
-		angle = targetAngle;
+	if(abs(targetPosition.x - position.x) < 2.0f && abs(targetPosition.y - position.y) < 2.0f){
+		position = targetPosition;
 	}else{
-		angle += (targetAngle - angle) * 0.000125f;
-		updateAngle();
+		position += (targetPosition - position) * 0.125f;
 	}
+	
+	
 }
 
 void Ping::draw()
@@ -82,7 +84,7 @@ void Ping::draw()
 	gl::enableAlphaBlending();
 	gl::color( color );
 
-	gl::drawSolidCircle( position, 10.0f);// - decay() );
+	gl::drawSolidRect( Rectf(position.x, position.y, position.x + 40.0f, position.y + 20.0f) );// - decay() );
 
 	// Run through list of packets & draw them
 	for( std::list<Packet>::iterator packets_it = packets.begin(); packets_it != packets.end(); ++packets_it ){
@@ -90,27 +92,6 @@ void Ping::draw()
 	}
 	gl::disableAlphaBlending();
 
-}
-
-void Ping::setAngle( float a )
-{
-	targetAngle = a;
-}
-
-void Ping::updateAngle()
-{
-	angle = targetAngle;
-	
-	float r = kRadius;
-	float ox = getWindowWidth()	/ 2.0f;
-	float oy = getWindowHeight() / 2.0f;
-	
-	float xPos;
-	float yPos;
-	xPos = r*cos(angle) + ox;
-	yPos = r*sin(angle) + oy;
-	position = Vec2f( xPos, yPos );
-	
 }
 
 void Ping::setPosition( ci::Vec2f p )
