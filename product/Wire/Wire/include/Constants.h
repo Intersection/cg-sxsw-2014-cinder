@@ -15,4 +15,4 @@ static const ci::Color kClearColor	= ci::Color(0.0f, 0.0f, 0.0f);
 
 static const int kMaxPings			= 20;
 
-#define FAKE_IT 1
+//#define FAKE_IT 1

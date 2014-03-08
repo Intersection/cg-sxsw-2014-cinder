@@ -32,7 +32,7 @@ public:
 
     double seconds;
 
-	ci::Color color;
+	ci::ColorA color;
 
 	float angle;
 	float targetAngle;

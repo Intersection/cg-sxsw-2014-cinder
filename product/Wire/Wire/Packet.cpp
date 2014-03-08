@@ -24,12 +24,10 @@ Packet::Packet( ci::Vec2f s, ci::Color c, ci::Vec2f a )
 	velocity = ci::Vec2f::zero();
 	decay = 0.0f;
 	
-	lifespan = 5.0f;
+	lifespan = 15.0f;
 	dead = false;
 	
 	time(&stamp);
-
-
 }
 
 double Packet::getDecay()
@@ -48,16 +46,9 @@ void Packet::update()
 
 	animationCounter += 10.0f;
 
-	if(abs((attractor.x) - position.x) < kPacketRadius && abs((attractor.y) - position.y) < kPacketRadius){
-		dead = true;
-		console() << "DEAD (Position)" << std::endl;
-		return;
-	}
-	
 	if(getDecay() >= lifespan){
 		dead = true;
 		console() << "DEAD (Time)" << std::endl;
-
 		return;
 	}
 	
@@ -66,10 +57,8 @@ void Packet::update()
 	// Update position toward attractor
 	position += ((attractor - position) * Vec2f(0.125f, 0.125f));
 
-	float mod = ((position.x / getWindowWidth()) / 1000);
 	//0.9001f
-	Vec3f deriv = perlin.dfBm( Vec3f( position.x, position.y, animationCounter ) * mod );
-//	Vec3f deriv = perlin.dfBm( Vec3f( position.x, position.y, animationCounter ) * 0.0001f );
+	Vec3f deriv = perlin.dfBm( Vec3f( position.x, position.y, animationCounter ) * 0.9001f );
 	z = deriv.z;
 	Vec2f deriv2( deriv.x, deriv.y );
 	deriv2.normalize();
@@ -77,6 +66,7 @@ void Packet::update()
 
 	position += velocity;
 	velocity *= damp;
+	color.a = getDecay() / lifespan;
 }
 
 void Packet::draw()
@@ -92,8 +82,8 @@ void Packet::draw()
 	
 	glEnd();
 	
-	gl::drawSolidCircle( position, kPacketRadius );
-	gl::drawSolidCircle( priorPosition, kPacketRadius );
+	gl::drawSolidCircle( position, kPacketRadius/2 );
+	gl::drawSolidCircle( priorPosition, kPacketRadius/2 );
 
 	//gl::drawSolidCircle( position, kPacketRadius/4.0f );
 	

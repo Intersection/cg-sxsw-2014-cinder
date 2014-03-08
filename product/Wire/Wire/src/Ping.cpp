@@ -22,7 +22,7 @@ Ping::Ping( ci::Vec2f p )
     
     std::uniform_real_distribution<float> dist(0.0, 1.0);
     
-	color = ci::Color( dist(gen), dist(gen), dist(gen) );
+	color = ci::ColorA( dist(gen), dist(gen), dist(gen), 0.7f );
 	
     count = 1;
 
@@ -55,19 +55,19 @@ void Ping::ping()
 
 void Ping::update()
 {
-	for( std::list<Packet>::iterator packets_it = packets.begin(); packets_it != packets.end(); ++packets_it ){
-		if(packets_it->isDead()){
-			//packets.erase(packets_it);
-			// Re-use this one.
+	std::list<Packet>::iterator packets_it = packets.begin();
+	while(packets_it != packets.end())
+	{
+		bool dead = packets_it->isDead();
+		
+		if(dead) {
+			packets.erase(packets_it++);
+		}else{
+			packets_it->update();
+			++packets_it;
 		}
 	}
 
-	
-	// Run through list of packets & update them
-	for( std::list<Packet>::iterator packets_it = packets.begin(); packets_it != packets.end(); ++packets_it ){
-		packets_it->update();
-	}
-	
 	if(abs(targetAngle - angle) < 15.0f){
 		angle = targetAngle;
 	}else{
@@ -79,7 +79,7 @@ void Ping::update()
 void Ping::draw()
 {
 	// Draw the origin point
-
+	gl::enableAlphaBlending();
 	gl::color( color );
 
 	gl::drawSolidCircle( position, 10.0f);// - decay() );
@@ -88,6 +88,8 @@ void Ping::draw()
 	for( std::list<Packet>::iterator packets_it = packets.begin(); packets_it != packets.end(); ++packets_it ){
 		packets_it->draw();
 	}
+	gl::disableAlphaBlending();
+
 }
 
 void Ping::setAngle( float a )
