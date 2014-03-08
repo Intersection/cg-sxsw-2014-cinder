@@ -1,7 +1,5 @@
 #include "Packet.h"
 #include "Constants.h"
-#include <random>
-#include <algorithm>
 
 
 Packet::Packet()
@@ -25,7 +23,7 @@ Packet::Packet( ci::Vec2f s, ci::Color c, ci::Vec2f a )
 	velocity = ci::Vec2f::zero();
 	decay = 0.0f;
 	
-	lifespan = 15.0f;
+	lifespan = 5.0f;
 	dead = false;
 	
 	time(&stamp);
@@ -41,22 +39,18 @@ double Packet::getDecay()
 
 void Packet::update()
 {
-	std::random_device rd;
-    std::mt19937_64 gen(rd());
-    std::uniform_real_distribution<float> dist(-1.0, 1.0);
 
 	animationCounter += 10.0f;
 
 	if(getDecay() >= lifespan){
 		dead = true;
-		console() << "DEAD (Time)" << std::endl;
 		return;
 	}
 	
 	priorPosition = position;
 	
 	// Update position toward attractor
-	position += ((attractor - position) * Vec2f(0.125f, 0.125f));
+	position += ((attractor - position) * Vec2f(0.025f, 0.1025f));
 
 	//0.9001f
 	Vec3f deriv = perlin.dfBm( Vec3f( position.x, position.y, animationCounter ) * 0.0001f );
@@ -67,7 +61,7 @@ void Packet::update()
 
 	position += velocity;
 	velocity *= damp;
-	color.a = getDecay() / lifespan;
+	color.a = 1.0f - (getDecay() / lifespan);
 }
 
 void Packet::draw()
@@ -77,15 +71,13 @@ void Packet::draw()
 	// draw all the particles as lines from mPosition to mLastPosition
 	glBegin( GL_LINES );
 		gl::color( color );
-		glVertex2f( startingPosition );
+		//glVertex2f( startingPosition );
 		glVertex2f( priorPosition );
 		glVertex2f( position );
-
-	
 	glEnd();
 	
-	gl::drawSolidCircle( position, kPacketRadius/2 );
-	gl::drawSolidCircle( priorPosition, kPacketRadius/2 );
+//	gl::drawSolidCircle( position, kPacketRadius/2 );
+//	gl::drawSolidCircle( priorPosition, kPacketRadius/2 );
 
 	//gl::drawSolidCircle( position, kPacketRadius/4.0f );
 	

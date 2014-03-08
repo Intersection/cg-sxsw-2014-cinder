@@ -14,7 +14,7 @@
 class Ping {
 public:
     Ping();
-    Ping( ci::Vec2f position );
+    Ping( ci::Vec2f position, int index );
     ~Ping();
 
     void ping();
@@ -29,6 +29,7 @@ public:
 	ci::Vec2f targetPosition;
 
     int count;
+	int index;
 
     time_t timer;
     time_t stamp;

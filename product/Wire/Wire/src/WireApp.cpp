@@ -43,8 +43,9 @@ void WireApp::shutdown()
 }
 
 void WireApp::setup(){
+	setFullScreen(true);
 	gl::enableAlphaBlending();
-	textureFont = gl::TextureFont::create(Font("Helvetica", 14), gl::TextureFont::Format().enableMipmapping());
+	textureFont = gl::TextureFont::create(Font("Menlo", 12), gl::TextureFont::Format().enableMipmapping());
 
 	beacon.setTextureFont( textureFont );
 }

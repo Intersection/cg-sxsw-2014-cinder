@@ -16,7 +16,7 @@ Ping::Ping()
 {
 }
 
-Ping::Ping( ci::Vec2f p )
+Ping::Ping( ci::Vec2f p, int i )
 {
     std::random_device rd;
     std::mt19937_64 gen(rd());
@@ -28,7 +28,9 @@ Ping::Ping( ci::Vec2f p )
     count = 1;
 
     time(&stamp);
-	position = p;
+	position = p + ci::Vec2f( 200.0f, 0.0f );
+	index = i;
+	position.y = 20.0f + i * 30.0f;
 }
 
 
@@ -38,13 +40,10 @@ void Ping::ping()
 {
 	count++;
     time(&updateStamp);
+
 	// Add a new packet particle
-	ci::Vec2f attractor = ci::Vec2f( getWindowWidth() / 2.0f, getWindowHeight() / 2.0f );
-
-	if( packets.size() > 20 ){
-		//packets.pop_back(); // Kill the oldest.
-	}
-
+	//ci::Vec2f attractor = ci::Vec2f( getWindowWidth() / 2.0f, getWindowHeight() / 2.0f );
+	ci::Vec2f attractor = ci::Vec2f( getWindowWidth() - 20.0f, position.y );
 
 	packets.push_back(Packet( position,
 							  color,
@@ -69,13 +68,11 @@ void Ping::update()
 		}
 	}
 
-	if(abs(targetPosition.x - position.x) < 2.0f && abs(targetPosition.y - position.y) < 2.0f){
-		position = targetPosition;
-	}else{
-		position += (targetPosition - position) * 0.125f;
-	}
-	
-	
+//	if(abs(targetPosition.x - position.x) < 2.0f && abs(targetPosition.y - position.y) < 2.0f){
+//		position = targetPosition;
+//	}else{
+//		position += (targetPosition - position) * 0.0125f;
+//	}
 }
 
 void Ping::draw()
@@ -86,17 +83,17 @@ void Ping::draw()
 
 	float ulx, uly, lrx, lry;
 
-	ulx = position.x;
+	ulx = position.x - 200.0f;
 	uly = position.y;
-	lrx = ulx + 40.0f;
+	lrx = ulx + 140.0f;
 	lry = uly + 20.0f;
 	
-	Rectf iconRect( ulx, uly, lrx, lry );
-	gl::drawSolidRect( iconRect );
-	Rectf textRect( lrx + 10.0f, uly + 15.0f, lrx + 130.0f, lry  );
+	Rectf textRect( ulx + 10.0f, uly + 5.0f, lrx, lry + 8.0f );
 	textureFont->drawStringWrapped( address, textRect );
 
-	
+	Rectf iconRect( lrx + 10.0f, uly - 5.0f, lrx + 10.0f + 40.0f, lry - 15.0f );
+	gl::drawSolidRect( iconRect );
+
 	
 	// Run through list of packets & draw them
 	for( std::list<Packet>::iterator packets_it = packets.begin(); packets_it != packets.end(); ++packets_it ){
@@ -109,6 +106,7 @@ void Ping::draw()
 void Ping::setPosition( ci::Vec2f p )
 {
 	targetPosition = p;
+	position = p;
 }
 
 void Ping::setTextureFont( gl::TextureFontRef t )

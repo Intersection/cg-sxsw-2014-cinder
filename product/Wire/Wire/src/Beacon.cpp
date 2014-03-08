@@ -71,7 +71,7 @@ void Beacon::doPacketCaptureFn()
 	struct pcap_pkthdr packetHeader;
 	u_char *sourceAddressPtr;
 	
-	
+	int index = 0;
 	while( !packetCaptureShouldStop ) {
 
 		
@@ -108,15 +108,14 @@ void Beacon::doPacketCaptureFn()
 
 		
         if(pings.count(addy) == 0){
-			pings[addy] = Ping( ci::Vec2f(spacing, spacing) );
+			pings[addy] = Ping( ci::Vec2f(spacing, spacing), index++ );
 			pings[addy].setTextureFont( textureFont );
 			pings[addy].setAddress( addy );
 
-			rebalancePings();
+			//rebalancePings();
         }
 
         pings[addy].ping();
-
 	}
 }
 
@@ -146,13 +145,11 @@ void Beacon::draw()
 void Beacon::rebalancePings()
 {
 	ci::Vec2f position;
-	int i = 0;
 
 	for(std::map<std::string, Ping>::iterator pings_it = pings.begin(); pings_it != pings.end(); pings_it++)
 	{
-		++i;
 		position.x = spacing;
-		position.y = i * ((getWindowHeight() - (4.0f * spacing)) / pings.size());
+		position.y = pings_it->second.index * ((getWindowHeight() - (4.0f * spacing)) / pings.size());
 		pings_it->second.setPosition( position );
 	}
 }
