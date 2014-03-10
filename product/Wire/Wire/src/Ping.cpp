@@ -1,12 +1,12 @@
-#include <cstdlib>
-#include <ctime>
 #include <random>
 #include <algorithm>
-#include "Ping.h"
-#include "Constants.h"
-#include "Packet.h"
+
 #include "cinder/gl/gl.h"
 #include "cinder/app/AppBasic.h"
+
+#include "Constants.h"
+#include "Ping.h"
+#include "Packet.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -21,10 +21,9 @@ Ping::Ping( ci::Vec2f p, int i )
     std::uniform_real_distribution<float> dist(0.0, 1.0);
     
 	color = ci::ColorA( dist(gen), dist(gen), dist(gen), 0.7f );
-	
-    count = 1;
 
     time(&stamp);
+
 	position = p + ci::Vec2f( 200.0f, 0.0f );
 	index = i;
 	position.y = 20.0f + i * 30.0f;
@@ -34,7 +33,6 @@ Ping::~Ping(){}
 
 void Ping::ping()
 {
-	count++;
     time(&updateStamp);
 
 	// Add a new packet particle and set the attractor to the opposite side

@@ -73,13 +73,9 @@ void WireApp::update(){
 void WireApp::draw()
 {
 	gl::clear( kClearColor );
-
-	gl::drawSolidRect( getWindowBounds() );
-
-	gl::clear( Color( 0.01f, 0.01f, 0.01f ), true );
     gl::enableAlphaBlending();
 	
 	beacon.draw();
 }
 
-CINDER_APP_BASIC( WireApp, RendererGl(0) )
+CINDER_APP_BASIC( WireApp, RendererGl(8) )

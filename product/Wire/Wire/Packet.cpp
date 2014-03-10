@@ -3,7 +3,6 @@
 
 using namespace ci;
 using namespace ci::app;
-using namespace std;
 
 Packet::Packet(){}
 

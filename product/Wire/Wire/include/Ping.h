@@ -21,7 +21,6 @@ public:
 	void					setAddress( std::string address );
 	
 	ci::Vec2f				position;
-    int						count;
 	int						index;
     time_t					timer;
     time_t					stamp;
